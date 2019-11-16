@@ -1,0 +1,31 @@
+{{#with danhsach.rows.[0]}}
+    <div class="container product-container"> 
+        <div class="row">
+            <div class="col">
+                <img src="images/{{this.bookimg}}" alt="#">
+            </div>
+            <div class="col">
+                <br>
+                <div>
+                    <h2 class="book-title">{{this.BookName}}</h2>
+                <div>
+                <br>
+                <p><strong>Tác giả:</strong> <a href="#">{{this.Author}}</a></p>
+                <p><strong>NXB:</strong> <a href="#">{{this.Publisher}}</a> &nbsp; &nbsp; &nbsp; <strong>Thể loại:</strong> <a href="#">{{this.Type}}</a></p>
+                <p class="book-description-style">{{this.Description}}</p>
+                <h3 class="price-style">{{this.Price}} đ</h3>
+                <br>
+                <div>
+                    <div class="display-inline-block choose-number">
+                        <p class="number-books-title">Số lượng: </p>
+                        <input type="number" value="1" min="0" class="number-books">
+                    </div>
+                    <div class="display-inline-block">
+                        <button class="buy-button">CHỌN MUA</button>
+                    </div>
+                </div>            
+            </div>
+        </div>
+
+    </div>
+    {{/with}}
