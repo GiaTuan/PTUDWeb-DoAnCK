@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
         return console.log(err);
     }
     // SQL Query > Insert Data
-    client.query('SELECT * FROM "Book"', function (err, result1) {
+    client.query('SELECT * FROM "RecommendBooks"', function (err, result1) {
         client.query('SELECT * FROM "FavoriteBooks"', function (err, result2) {
           res.render('index',{danhsach: result1,danhsach2: result2});
         });

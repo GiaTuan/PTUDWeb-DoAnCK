@@ -10,22 +10,14 @@ router.get('/', function(req, res, next) {
         return console.log(err);
     }
     // SQL Query > Insert Data
-    client.query("SELECT * FROM \"Books\"  WHERE \"BookID\"='Book1'", function (err, result) {
+    client.query("SELECT * FROM \"Books\"  WHERE \"Type\"='Tiểu thuyết'", function (err, result) {
         done();
         if(err){
             return console.log('error running query', err);
         }
-        res.render('product',{danhsach: result});
+        res.render('shop',{danhsach: result});
     });
 });
 });
 
-/* GET home page. 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});*/
-
 module.exports = router;
-
-
-/* */

@@ -10,15 +10,15 @@
                     <h2 class="book-title">{{this.BookName}}</h2>
                 <div>
                 <br>
-                <p><strong>Tác giả:</strong> <a href="#">{{this.Author}}</a></p>
-                <p><strong>NXB:</strong> <a href="#">{{this.Publisher}}</a> &nbsp; &nbsp; &nbsp; <strong>Thể loại:</strong> <a href="#">{{this.Type}}</a></p>
+                <p><strong>Tác giả:</strong> {{this.Author}}</p>
+                <p><strong>NXB:</strong> <a href="" id="publisher">{{this.Publisher}}</a> &nbsp; &nbsp; &nbsp; <strong>Thể loại:</strong> <a href="" id="type">{{this.Type}}</a></p>
                 <p class="book-description-style">{{this.Description}}</p>
                 <h3 class="price-style">{{this.Price}} đ</h3>
                 <br>
                 <div>
                     <div class="display-inline-block choose-number">
                         <p class="number-books-title">Số lượng: </p>
-                        <input type="number" value="1" min="0" class="number-books">
+                        <input type="number" value="1" min="1" class="number-books">
                     </div>
                     <div class="display-inline-block">
                         <button class="buy-button">CHỌN MUA</button>
@@ -29,3 +29,68 @@
 
     </div>
     {{/with}}
+
+    <script>
+        function getPublisher(e){
+            e.preventDefault();
+            const publisher= document.getElementById("publisher").textContent;
+            if(publisher === "Nhã Nam")
+            {     
+                window.location.replace("NXB-NhaNam")
+            }
+            
+            else if(publisher === "Nhà Xuất Bản Hội Nhà Văn")
+            {     
+                window.location.replace("NXB-HNV")
+            }
+
+            else if(publisher === "Nhà Xuất Bản Trẻ")
+            {     
+                window.location.replace("NXB-Tre")
+            }
+
+            else if(publisher === "Nhà Xuất Bản Lao Động")
+            {     
+                window.location.replace("NXB-LaoDong")
+            }
+
+            else if(publisher === "Nhà Xuất Bản Tổng hợp TP.HCM")
+            {     
+                window.location.replace("NXB-TH")
+            }
+
+             else if(publisher === "Nhà Xuất Bản Tri Thức")
+            {     
+                window.location.replace("NXB-TriThuc")
+            }
+
+            else if(publisher === "Nhà Xuất Bản Thế Giới")
+            {     
+                window.location.replace("NXB-TheGioi")
+            }
+        }
+
+         function getType(e){
+            e.preventDefault();
+            const typeName= document.getElementById("type").textContent;
+            console.log(typeName);
+            if(typeName === "Tiểu thuyết")
+            {     
+                console.log('1');
+                window.location.replace("TieuThuyet")
+            }
+            
+            else if(typeName === "Tự truyện")
+            {     
+                window.location.replace("TuTruyen")
+            }
+
+            else if(typeName === "Văn học")
+            {     
+                window.location.replace("VanHoc")
+            }
+        }
+        document.getElementById("publisher").onclick=getPublisher;
+
+        document.getElementById("type").onclick=getType;
+    </script>

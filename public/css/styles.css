@@ -1187,3 +1187,25 @@ footer {
 .favorite-book-align{
   text-align: center;
 }
+.book-container{
+  width: 30%;
+}
+.shop-book-title{
+  color: black;
+  font-weight: bold;
+}
+.filter{
+  border: 1px solid #e7e7e7
+}
+.filter-title{
+  background: #e3e3e3;
+}
+.filter-list{
+  list-style-type: none;
+}
+.filter-elements{
+  font-style: italic;
+}
+.type-book-title{
+  color: black;
+}

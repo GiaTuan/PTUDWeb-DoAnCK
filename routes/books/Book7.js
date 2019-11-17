@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         return console.log(err);
     }
     // SQL Query > Insert Data
-    client.query("SELECT * FROM \"FavoriteBooks\"  WHERE \"BookID\"='Book7'", function (err, result) {
+    client.query("SELECT * FROM \"Books\"  WHERE \"BookID\"='Book7'", function (err, result) {
         done();
         if(err){
             return console.log('error running query', err);
