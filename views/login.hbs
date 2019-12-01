@@ -1,0 +1,60 @@
+<div class="form-container" >
+    <form name="sign-in-form"  method="POST">
+        <br>
+        <h2 class="favorite-book-align">ĐĂNG NHẬP TÀI KHOẢN</h2><br>
+        <div class="container">
+            <div class="row row-margin">
+                <div class="col-sm-4">
+                    <h6 class="change-title-right" >Tài khoản:</h6>
+                </div>
+            <div class="col">
+                <input type="text" name="username" id="account" class="input-form" placeholder="Điền tên tài khoản">
+            </div>
+            </div>
+            <div class="row row-margin">
+                <div class="col-sm-4">
+                    <h6 class="change-title-right" >Mật khẩu:</h6>
+                </div>
+                <div class="col">
+                    <div>
+                        <input type="password" name="password" id="password" class="input-form" placeholder="Điền mật khẩu (ít nhất 6 kí tự)">
+                        <img src="/images/seepassword.png" class="see-password-img" title="Show password" id="see-password"> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        <p class="announce-log-in favorite-book-align">{{announce}}</p>
+        <input type="submit" id="submit-signup" name="submit-sign-up" value="Đăng nhập" class="center-submit submit-decoration">
+    </div>
+    </form>
+    <br>
+</div>
+<br>
+
+
+<script>
+    function checkPassword(e){
+        const passwordValue = document.forms['sign-up-form'].password.value;
+        if( passwordValue.length <= 6)
+        {
+            e.preventDefault()
+            document.getElementById('password-announce').innerHTML = 'Password phải có ít nhất 6 ký tự';
+        }
+    }
+    function seePassword(){
+        const currentType = document.getElementById('password').type;
+        if(currentType === "password")
+        {
+            document.getElementById('see-password').title = "Hide password"
+            document.getElementById('password').type = "text";
+        }
+        else
+        {
+            document.getElementById('see-password').title = "Show password"
+            document.getElementById('password').type = "password";
+        }
+    }
+    document.getElementById('submit-signup').onclick = checkPassword;
+    document.getElementById('see-password').onclick = seePassword;
+</script>

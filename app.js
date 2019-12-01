@@ -5,15 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require("express-session")
 
-var  bodyParser = require("body-parser")
+var bodyParser = require("body-parser")
 var passport = require('passport');
 
 
 //===================================================
 var indexRouter = require('./routes/index')
 var shopRouter = require('./routes/shop')
-var signUpRouter = require('./routes/sign-up')
-var signInRouter = require('./routes/sign-in')
+var logUpRouter = require('./routes/logup')
+var logInRouter = require('./routes/login')
+var logOutRouter =require('./routes/logout')
+var infoRouter =require('./routes/info')
 
 var app = express();
 
@@ -28,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.static("public"));
 app.use(session({ secret: "cats" }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,8 +41,10 @@ app.use(passport.session());
 //=================================================
 app.use('/', indexRouter);
 app.use('/shop', shopRouter);
-app.use('/sign-up',signUpRouter);
-app.use('/sign-in',signInRouter);
+app.use('/logup',logUpRouter);
+app.use('/login',logInRouter);
+app.use('/logout',logOutRouter);
+app.use('/info',infoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

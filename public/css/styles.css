@@ -1262,4 +1262,15 @@ footer {
 }
 .sign-in-account{
   background: black !important;
+  width: 200px;
+}
+.announce-log-in{
+  color:red;
+}
+.info-border{
+  border: 1px solid #252525;
+  padding: 10px 0px 10px 10px;
+}
+.align-title{
+  align-items: center;
 }

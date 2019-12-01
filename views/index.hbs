@@ -7,21 +7,21 @@
             </ol>
             <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/slide1.jpg" class="d-block w-100" alt="...">
+                <img src="/images/slide1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                 <h5>First slide label</h5>
                 <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/slide2.jpg" class="d-block w-100" alt="...">
+                <img src="/images/slide2.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                 <h5>Second slide label</h5>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="images/slide3.jpg" class="d-block w-100" alt="...">
+                <img src="/images/slide3.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                 <h5>Third slide label</h5>
                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
@@ -43,13 +43,13 @@
             <div class="title">
                 <h2>Những sách được đề cử</h2>
                 <hr>
-                
+               
             </div>
             <div class="row">
                 {{#each danhsach.rows}}
                 <div class="col-lg-3 col-md-6"> 
                     <div class="item">
-                        <img src="images/{{this.bookimg}}" alt="{{this.BookID}}-img">
+                        <img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img">
                         <h3>{{this.BookName}}</h3>
                         <p>{{this.Author}}</p>
                         <h6><span class="price">{{this.Price}}đ</span> / <a href="/shop/product/id={{this.BookID}}">Mua ngay</a></h6>
@@ -88,7 +88,7 @@
                  {{#each danhsach2.rows}}
                 <div class="col-lg-3 col-md-6"> 
                     <div class="item">
-                        <a href="/shop/product/id={{this.BookID}}"><img src="images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
+                        <a href="./shop/product/id={{this.BookID}}"><img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
                         <a href="/shop/product/id={{this.BookID}}"><h3 class="favorite-book-align" >{{this.BookName}}</h3></a>
                         <p class="favorite-book-align">{{this.Author}}</p>
                         <h6 class="favorite-book-align"><span class="price">{{this.Price}}đ</span> / <a href="/shop/product/id={{this.BookID}}">Mua ngay</a></h6>

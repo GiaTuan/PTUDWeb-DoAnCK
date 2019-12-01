@@ -12,7 +12,14 @@ module.exports.getByID = function(id,req,res,next){
         if(err){
             return console.log('error running query', err);
         }
-        res.render('product',{danhsach : result});
+        if(req.isAuthenticated())
+        {
+          res.render('product',{layout: 'layout2',danhsach: result, username: req.user});
+        }
+        else
+        {
+            res.render('product',{danhsach : result});
+        }
         });
     });
 }

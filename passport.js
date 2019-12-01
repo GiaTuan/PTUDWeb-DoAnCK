@@ -1,12 +1,11 @@
 const LocalStrategy = require('passport-local').Strategy
-const bcrypt = require('bcryptjs');
-
+const bcrypt = require('bcryptjs')
 const pool = require('./connection');
 module.exports = function(passport){
   passport.use(new LocalStrategy(
     function(username, password, done) {
-      console.log('SELECT * FROM "testUser"  WHERE "account"='+ '\'' + username +'\'');
-      pool.query('SELECT * FROM "testUser"  WHERE "account"='+ '\'' + username +'\'', function (err, user){
+      console.log('SELECT * FROM "Users"  WHERE "account"='+ '\'' + username +'\'');
+      pool.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + username +'\'', function (err, user){
         if (err) { return done(err); }
         if (!user.rows[0]) {
           return done(null, false, { message: 'Incorrect username.' });
@@ -20,7 +19,6 @@ module.exports = function(passport){
           }
           if(res)
           {
-            console.log("dung roiiiiiiiiiiiiiiiiiiiiiii");
             return done(null, user);
           }
           else{
@@ -36,7 +34,7 @@ module.exports = function(passport){
   });
   
   passport.deserializeUser(function(username, done) {
-    pool.query('SELECT * FROM "testUser"  WHERE "account"='+ '\'' + username +'\'', function(err, user) {
+    pool.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + username +'\'', function(err, user) {
       done(err, user.rows[0].account);
     });
   });

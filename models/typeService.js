@@ -24,7 +24,14 @@ module.exports.getType= function(req, res, next) {
           if(err){
               return console.log('error running query', err);
           }
-          res.render('shop',{danhsach: result});
+          if(req.isAuthenticated())
+          {
+            res.render('shop',{layout: 'layout2',danhsach: result , username: req.user});
+          }
+          else
+          {
+            res.render('shop',{danhsach: result});
+          }
       });
   });
   }
