@@ -2,7 +2,7 @@
     <div class="container product-container"> 
         <div class="row">
             <div class="col">
-                <img src="images/{{this.bookimg}}" alt="#">
+                <img src="/images/{{this.bookimg}}" alt="#">
             </div>
             <div class="col">
                 <br>
@@ -36,37 +36,37 @@
             const publisher= document.getElementById("publisher").textContent;
             if(publisher === "Nhã Nam")
             {     
-                window.location.replace("NXB-NhaNam")
+                window.location.replace("/shop/publisher=NXB-LaoDongNXB-NhaNam")
             }
             
             else if(publisher === "Nhà Xuất Bản Hội Nhà Văn")
             {     
-                window.location.replace("NXB-HNV")
+                window.location.replace("/shop/publisher=NXB-HNV")
             }
 
             else if(publisher === "Nhà Xuất Bản Trẻ")
             {     
-                window.location.replace("NXB-Tre")
+                window.location.replace("/shop/publisher=NXB-Tre")
             }
 
             else if(publisher === "Nhà Xuất Bản Lao Động")
             {     
-                window.location.replace("NXB-LaoDong")
+                window.location.replace("/shop/publisher=NXB-LaoDong")
             }
 
             else if(publisher === "Nhà Xuất Bản Tổng hợp TP.HCM")
             {     
-                window.location.replace("NXB-TH")
+                window.location.replace("/shop/publisher=NXB-TH")
             }
 
              else if(publisher === "Nhà Xuất Bản Tri Thức")
             {     
-                window.location.replace("NXB-TriThuc")
+                window.location.replace("/shop/publisher=NXB-TriThuc")
             }
 
             else if(publisher === "Nhà Xuất Bản Thế Giới")
             {     
-                window.location.replace("NXB-TheGioi")
+                window.location.replace("/shop/publisher=NXB-TheGioi")
             }
         }
 
@@ -74,20 +74,19 @@
             e.preventDefault();
             const typeName= document.getElementById("type").textContent;
             console.log(typeName);
-            if(typeName === "Tiểu thuyết")
+            if(typeName === "Tiểu thuyết")
             {     
-                console.log('1');
-                window.location.replace("TieuThuyet")
+                window.location.replace("/shop/type=TieuThuyet")
             }
             
             else if(typeName === "Tự truyện")
             {     
-                window.location.replace("TuTruyen")
+                window.location.replace("/shop/type=TuTruyen")
             }
 
-            else if(typeName === "Văn học")
+            else if(typeName === "Văn học")
             {     
-                window.location.replace("VanHoc")
+                window.location.replace("/shop/type=VanHoc")
             }
         }
         document.getElementById("publisher").onclick=getPublisher;

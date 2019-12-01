@@ -333,7 +333,7 @@ header .cart {
       .about-sec .about-content .btn-sec .btn {
         margin-right: 10px; }
       .about-sec .about-content .btn-sec .black {
-        background: #252525;
+        
         border: 2px solid #252525; }
         .about-sec .about-content .btn-sec .black:hover {
           background: transparent;
@@ -1208,4 +1208,58 @@ footer {
 }
 .type-book-title{
   color: black;
+}
+.sign-in-button:hover{
+  text-decoration: none;
+  background-color: transparent;
+  border: 2px solid #ff3c00;
+  color: #000;
+}
+.sign-in-button{
+  background-color: #252525;
+  padding:8px;
+  text-align: center;
+  text-decoration: none;
+  color:white;
+  margin-right: 5px;
+}
+.form-container{
+  width: 50%;
+  margin: auto;
+  border: 1px solid #252525;
+}
+.change-title-right{
+  text-align:right;
+}
+.input-form{
+  width: 70%;
+}
+.row-margin{
+  margin-bottom: 20px;
+}
+
+.submit-decoration{
+  background-image:linear-gradient(#fcba68,#fa8900);
+  width: 150px;
+  height: 40px;
+  border-radius: 25px;
+  border: none;
+}
+.center-submit{
+  display: block;
+  margin: auto;
+}
+.announce{
+  color:red;
+  margin: 0;
+}
+.see-password-img{
+  width:20px;
+  height: 20px
+}
+.see-password-img:hover{
+  cursor: pointer;
+}
+.sign-in-account{
+  background: black !important;
 }

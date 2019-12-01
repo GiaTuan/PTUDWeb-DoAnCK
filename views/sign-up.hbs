@@ -1,0 +1,83 @@
+<div class="form-container" >
+    <form name="sign-up-form" method="POST" enctype="application/x-www-form-urlencoded">
+    <br>
+        <h2 class="favorite-book-align">ĐĂNG KÝ TÀI KHOẢN</h2><br>
+        <div class="container">
+        <div class="row row-margin">
+            <div class="col-sm-4">
+                <h6 class="change-title-right" >Tài khoản:</h6>
+            </div>
+            <div class="col">
+                <input type="text" name="username" id="account" class="input-form" placeholder="Điền tên tài khoản">
+                <p class="announce">{{announce}}</p>
+            </div>
+        </div>
+         <div class="row row-margin">
+            <div class="col-sm-4 ">
+                <h6 class="change-title-right">Mật khẩu: </h6>
+                
+            </div>
+            <div class="col">
+                <div>
+                    <input type="password" name="password" id="password" class="input-form" placeholder="Điền mật khẩu (ít nhất 6 kí tự)">
+                    <img src="/images/seepassword.png" class="see-password-img" title="Show password" id="see-password"> 
+                </div>
+                <p class="announce" id="password-announce"></p>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="col-sm-4 ">
+                <h6 class="change-title-right">Họ tên: </h6>
+            </div>
+            <div class="col">
+                <input type="text" name="name" class="input-form" placeholder="Điền họ tên">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="col-sm-4 ">
+                <h6 class="change-title-right">Email: </h6>
+            </div>
+            <div class="col">
+                <input type="email" name="email" class="input-form" placeholder="Điền email">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="col-sm-4 ">
+                <h6 class="change-title-right">Số điện thoại: </h6>
+            </div>
+            <div class="col">
+                <input type="text" name="phone" class="input-form" placeholder="Điền số điện thoại">
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" id="submit-signup" name="submit-sign-up" value="Đăng ký" class="center-submit submit-decoration">
+    </div>
+    <br>
+    </form>
+</div>
+<script>
+    function checkPassword(e){
+        const passwordValue = document.forms['sign-up-form'].password.value;
+        if( passwordValue.length <= 6)
+        {
+            e.preventDefault()
+            document.getElementById('password-announce').innerHTML = 'Password phải có ít nhất 6 ký tự';
+        }
+    }
+    function seePassword(){
+        const currentType = document.getElementById('password').type;
+        if(currentType === "password")
+        {
+            document.getElementById('see-password').title = "Hide password"
+            document.getElementById('password').type = "text";
+        }
+        else
+        {
+            document.getElementById('see-password').title = "Show password"
+            document.getElementById('password').type = "password";
+        }
+    }
+    document.getElementById('submit-signup').onclick = checkPassword;
+    document.getElementById('see-password').onclick = seePassword;
+</script>

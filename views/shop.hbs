@@ -2,45 +2,47 @@
     <div class="row">
         <div class="col-2" style="padding: 0;">
             <section class="filter">
-                <a href="shop">XEM TẤT CẢ</a>
+               
+                <a href="/shop">XEM TẤT CẢ</a>
                 <section>
+
                     <h4 class="filter-title">THỂ LOẠI SÁCH</h4>
                     <ul class="filter-list">
-                        <a href="VanHoc" class="type-book-title"><li class="filter-elements">Văn học</li></a>
-                        <a href="TieuThuyet" class="type-book-title"><li class="filter-elements">Tiểu thuyết</li></a>
-                        <a href="TuTruyen" class="type-book-title"><li class="filter-elements">Tự truyện</li></a>
+                        <a href="/shop/type=VanHoc" class="type-book-title"><li class="filter-elements">Văn học</li></a>
+                        <a href="/shop/type=TieuThuyet" class="type-book-title"><li class="filter-elements">Tiểu thuyết</li></a>
+                        <a href="/shop/type=TuTruyen" class="type-book-title"><li class="filter-elements">Tự truyện</li></a>
                     </ul>
                 </section>
                 <section>
                     <h4 class="filter-title">NGÔN NGỮ</h4>
                     <ul class="filter-list">
-                        <a href="VietnameseBooks" class="type-book-title"><li class="filter-elements">Tiếng Việt</li></a>
-                        <a href="ForeignLanguageBooks" class="type-book-title"><li class="filter-elements">Nước Ngoài</li></a>
+                        <a href="/shop/lang=Vietnamese" class="type-book-title"><li class="filter-elements">Tiếng Việt</li></a>
+                        <a href="/shop/lang=Foreign" class="type-book-title"><li class="filter-elements">Nước Ngoài</li></a>
                     </ul>
                 </section>
                 <section>
                     <h4 class="filter-title">NHÀ XUẤT BẢN</h4>
                     <ul class="filter-list">
-                        <a href="NXB-NhaNam" class="type-book-title"><li class="filter-elements">Nhã Nam</li></a>
-                        <a href="NXB-TriThuc" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Tri Thức</li></a>
-                        <a href="NXB-Tre" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Trẻ</li></a>
-                        <a href="NXB-TheGioi" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Thế Giới</li></a>
-                        <a href="NXB-HNV" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Hội Nhà Văn</li></a>
-                        <a href="NXB-TH" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Tổng hợp TP.HCM</li></a>
-                        <a href="NXB-LaoDong" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Lao Động</li></a>
+                        <a href="/shop/publisher=NXB-NhaNam" class="type-book-title"><li class="filter-elements">Nhã Nam</li></a>
+                        <a href="/shop/publisher=NXB-TriThuc" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Tri Thức</li></a>
+                        <a href="/shop/publisher=NXB-Tre" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Trẻ</li></a>
+                        <a href="/shop/publisher=NXB-TheGioi" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Thế Giới</li></a>
+                        <a href="/shop/publisher=NXB-HNV" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Hội Nhà Văn</li></a>
+                        <a href="/shop/publisher=NXB-TH" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Tổng hợp TP.HCM</li></a>
+                        <a href="/shop/publisher=NXB-LaoDong" class="type-book-title"><li class="filter-elements">Nhà Xuất Bản Lao Động</li></a>
                        
                     </ul>
                 </section>
             </section>
         </div>
-        <div class="col">
+        <div class="col">  
             <div class="d-flex flex-sm-wrap">
                 {{#each danhsach.rows}}
                 <div class="p-2 bd-highlight book-container">
-                    <a href="{{this.BookID}}"><img src="images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
-                    <a href="{{this.BookID}}"><h5 class="favorite-book-align shop-book-title" >{{this.BookName}}</h5></a>
+                    <a href="/shop/product/id={{this.BookID}}"><img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
+                    <a href="/shop/product/id={{this.BookID}}"><h5 class="favorite-book-align shop-book-title" >{{this.BookName}}</h5></a>
                     <p class="favorite-book-align">{{this.Author}}</p>
-                    <h6 class="favorite-book-align"><span class="price">{{this.Price}}đ</span> / <a href="{{this.BookID}}">Mua ngay</a></h6>           
+                    <h6 class="favorite-book-align"><span class="price">{{this.Price}}đ</span> / <a href="/shop/product/id={{this.BookID}}">Mua ngay</a></h6>           
                 </div>
                 {{/each}}
             </div>
