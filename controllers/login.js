@@ -10,3 +10,4 @@ module.exports.submitLogIn = function(req,res,next){
 module.exports.getUserInfo = function(req,res,next){
     logInModel.getUserInfo(req,res,next);
 }
+

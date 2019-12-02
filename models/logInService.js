@@ -37,7 +37,7 @@ module.exports.getUserInfo =  function(req,res,next){
             }
             else
             {
-                res.redirect('/');
+                res.redirect('/logup');
             }
         });
     });

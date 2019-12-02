@@ -1194,17 +1194,29 @@ footer {
   color: black;
   font-weight: bold;
 }
+.filter-container{
+  padding: 0 !important;
+}
 .filter{
-  border: 1px solid #e7e7e7
+  background-color: #ffffff !important;
+  color: black !important;
+  border: 1px solid black !important;
+  width: 100%;
 }
 .filter-title{
-  background: #e3e3e3;
+  font-weight: bold !important;
 }
 .filter-list{
   list-style-type: none;
+  font-size: 1.1em;
+  margin: 5px;
 }
 .filter-elements{
   font-style: italic;
+}
+.type-book-title:hover{
+  text-decoration: none;
+  font-weight: bold;
 }
 .type-book-title{
   color: black;
@@ -1273,4 +1285,21 @@ footer {
 }
 .align-title{
   align-items: center;
+}
+.see-all-books{
+  color: black;
+  font-weight: bold;
+  margin-bottom: 0 !important;
+}
+
+.see-all-books:hover{
+  text-decoration: none;
+  font-weight: bold;
+}
+.see-all-books-container{
+  border: 1px solid black;
+  border-radius: 4px;
+}
+.see-all-books-container{
+  padding: 7px;
 }
