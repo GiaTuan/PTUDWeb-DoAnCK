@@ -7,23 +7,29 @@ var session = require("express-session")
 
 var bodyParser = require("body-parser")
 var passport = require('passport');
-
+var hbs = require('hbs');
 
 //===================================================
-var indexRouter = require('./routes/index')
-var shopRouter = require('./routes/shop')
-var logUpRouter = require('./routes/logup')
-var logInRouter = require('./routes/login')
-var logOutRouter =require('./routes/logout')
-var infoRouter =require('./routes/info')
+var indexRouter = require('./routes/user/index')
+var shopRouter = require('./routes/user/shop')
+var logUpRouter = require('./routes/user/logup')
+var logInRouter = require('./routes/user/login')
+var logOutRouter =require('./routes/user/logout')
+var infoRouter =require('./routes/user/info')
+
+
+var adminRouter =require('./routes/admin/index')
 
 var app = express();
 
 require('./passport')(passport);
 
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -45,6 +51,7 @@ app.use('/logup',logUpRouter);
 app.use('/login',logInRouter);
 app.use('/logout',logOutRouter);
 app.use('/info',infoRouter);
+app.use('/admin',adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

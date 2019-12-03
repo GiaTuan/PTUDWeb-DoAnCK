@@ -1,0 +1,29 @@
+{{>nav}}
+<h3>Danh sách người dùng</h3>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tài khoản</th>
+            <th scope="col">Họ tên</th>
+            <th scope="col">Email</th>
+            <th scope="col">Địa chỉ</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Thay đổi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each user.rows}}
+            <tr>
+            <th scope="row">1</th>
+            <td>{{this.account}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.address}}</td>
+            <td>{{this.phone}}</td>
+            <td><button id="{{this.account}}">Thay đổi</button></td>
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>

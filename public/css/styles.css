@@ -507,7 +507,7 @@ header .cart {
     background: #cdcdcd;
     border-radius: 50%;
     margin: 0 5px;
-    trnsition: all 0.3s; }
+    transition: all 0.3s; }
     .testimonial-sec button.owl-dot.active {
       background: #ff9700;
       transform: scale(1.6); }
@@ -1302,4 +1302,42 @@ footer {
 }
 .see-all-books-container{
   padding: 7px;
+}
+.logo-container{
+  width: 70%;
+  margin: auto;
+}
+.logo{
+  width: 20%;
+  margin: 20px auto 20px auto;
+  display: block;
+}
+.align-center{
+  text-align: center;
+}
+.admin-dropbox{
+  float: right;
+}
+.admin-nav{
+  clear:right;
+}
+.sign-in-admin{
+  background: orange !important;
+  width: 200px;
+  margin-right: 50px;
+}
+.admin-nav-button{
+  background-color: #252525;
+  padding:8px;
+  text-align: center;
+  text-decoration: none;
+  color:white;
+  margin-right: 5px;
+}
+.admin-nav-button:hover{
+  text-decoration: none;
+  color: #ffffff;
+}
+.body-container{
+  clear: right;
 }
