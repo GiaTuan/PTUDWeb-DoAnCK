@@ -1341,3 +1341,7 @@ footer {
 .body-container{
   clear: right;
 }
+.display-pages{
+  display:flex;
+  justify-content: center;
+}

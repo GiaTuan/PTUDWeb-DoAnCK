@@ -60,7 +60,7 @@ module.exports.getSignUp = function(req,res,next){
             announce= 'Tài khoản đã tồn tại';
             res.render('admin/signup',{layout: 'ad-layout2',adname: req.user,announce})
         }
-        if(announce==='success')
+        if(announce=== 'success')
         {
             res.render('admin/signup-success',{layout: 'ad-layout2' ,adname: req.user});
         }
