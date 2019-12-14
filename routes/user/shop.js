@@ -12,5 +12,6 @@ router.get('/product/id=:id',book_controller.book);
 router.get('/publisher=:id',publisher_controller.publishers);
 router.get('/lang=:id',language_controller.language);
 router.get('/type=:id',type_controller.type);
+router.get('/find',controller.getFind);
 
 module.exports = router;

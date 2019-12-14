@@ -1,4 +1,67 @@
-<div class="container">
+<div class="advanced-filter">
+    <button class="button-filter" id="filter-button"><img src="/images/filter.png" class="filter-img"></button>
+    <div class="dropdown display-inline price-select">
+        <button class="btn btn-secondary dropdown-toggle price-select-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sắp xếp theo giá
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#" id="price-increase">Tăng dần</a>
+            <a class="dropdown-item" href="#" id = "price-decrease">Giảm dần</a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="collapse-filter" id="filter-info">
+    <div class="container filter-info-container">
+        <div class="row">
+            <div class="col">
+                <h3>Giá tiền</h3>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="price" id="lt100">
+                    <label for="lt100"> <100.000đ</label>
+                </div>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="price" id="gte100">
+                    <label for="gte100">≥ 100.000đ</label>
+                </div>
+            </div>
+
+            <div class="col">
+                <h3>Thể loại</h3>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="theloai" id="vanhoc">
+                    <label for="vanhoc">Văn học</label>
+                </div>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="theloai" id="tieuthuyet">
+                    <label for="tieuthuyet">Tiểu thuyết</label>
+                </div>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="theloai" id="tutruyen">
+                    <label for="tutruyen">Tự truyện</label>
+                </div>
+            </div>
+
+            <div class="col">
+                <h3>Ngôn ngữ</h3>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="ngonngu" id="tiengviet">
+                    <label for="vanhoc">Tiếng Việt</label>
+                </div>
+                <div>
+                    <input type="radio" class="filter-elements display-inline" name="ngonngu" id="ngoaingu">
+                    <label for="tieuthuyet">Ngoại ngữ</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <a href="#" class="center-submit" id="find-filter"><button class="submit-decoration" id="find-filter-btn">Tìm kiếm</button></a>
+        </div>
+       
+    </div>
+</div>
+<br>
+<div class="container shop-container" id="xxxx">
     <div class="row">
         <div class="col-3" >
             <section>
@@ -89,10 +152,27 @@
 </div>
 <script>
     window.onload = function()
-    {     
+    {   
         const pages = {{numbersOfPages}};
-        let href;      
-        href = window.location.pathname + "?page=";
+        let href = window.location.pathname + "?page=";      
+        let sort = "";
+        let find = "";
+        if(window.location.href.includes('find'))
+        {
+            const substr = window.location.href.indexOf('&');
+            find = window.location.href.substring(substr);  
+            console.log(href);     
+            console.log(find); 
+        }
+        if(window.location.href.includes('sort=asc'))
+        {
+            sort ="&sort=asc"
+        }
+         if(window.location.href.includes('sort=desc'))
+        {
+            sort ="&sort=desc"
+        }
+       
         for(let i = 1 ; i <= pages ; i++)
         {
             const ul = document.getElementById('pages');
@@ -100,11 +180,82 @@
             const a = document.createElement("a");
             a.appendChild(document.createTextNode(i));
             a.setAttribute("class","page-link");
-            a.setAttribute("href",href+i.toString());
+            a.setAttribute("href",href+i.toString()+find+sort);
             li.appendChild(a);
             li.setAttribute("class", "page-item");
             ul.appendChild(li);
         }
 
+        //tạo đường link cho href của sắp xếp theo giá
+        document.getElementById('price-increase').href = window.location.href.includes('sort=desc')? window.location.href.replace('sort=desc','sort=asc') : window.location.href.includes('sort=asc')? window.location.href+'#' : window.location.href + '&sort=asc';
+        document.getElementById('price-decrease').href = window.location.href.includes('sort=asc')? window.location.href.replace('sort=asc','sort=desc') : window.location.href.includes('sort=desc')? window.location.href+'#' : window.location.href + '&sort=desc';
+
     }
+
+    function showFilter(){
+        const filter= document.getElementById('filter-info');
+        if(filter.style.display === "none")
+        {
+            filter.style.display ="block";
+        }
+        else{
+            filter.style.display = "none";
+        }
+    }
+
+    document.getElementById('filter-button').onclick = showFilter;
+
+    function getPriceCheck(){
+        if(document.getElementById('lt100').checked)
+        {
+            return 'lt100';
+        }
+        else if(document.getElementById('gte100').checked)
+        {
+            return 'gte100';
+        }
+        return '';
+    }
+
+    function getTypeCheck(){
+        if(document.getElementById('vanhoc').checked)
+        {
+            return 'vanhoc';
+        }
+        else if(document.getElementById('tieuthuyet').checked)
+        {
+            return 'tieuthuyet';
+        }
+         else if(document.getElementById('tutruyen').checked)
+        {
+            return 'tutruyen';
+        }
+        return '';
+    }
+
+    function getLangCheck(){
+        if(document.getElementById('tiengviet').checked)
+        {
+            return 'tiengviet';
+        }
+        else if(document.getElementById('ngoaingu').checked)
+        {
+            return 'ngoaingu';
+        }
+        return '';
+    }
+
+    function findFilter(){
+        const priceCheck = getPriceCheck();
+        const typeCheck = getTypeCheck(); 
+        const langCheck = getLangCheck();
+        if(priceCheck === '' && typeCheck === '' && langCheck === '')
+        {
+            return;
+        }
+        document.getElementById('find-filter').href = '/shop/find?page=1&gia='+ priceCheck +'&theloai=' + typeCheck + '&lang=' + langCheck;
+    }
+
+    document.getElementById('find-filter-btn').onclick = findFilter;
 </script>
+

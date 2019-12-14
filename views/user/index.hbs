@@ -73,7 +73,7 @@
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and Scrambled it to make a type and typesetting industry. Lorem Ipsum has been the book. </p>
             <p>It has survived not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and</p>
             <div class="btn-sec">
-                <a href="shop" class="btn yellow">Mua ngay</a>
+                <a href="/shop?page=1" class="btn yellow">Mua ngay</a>
                 <a href="#" class="btn black">Đăng ký</a>
             </div>
         </div>
@@ -88,7 +88,7 @@
                  {{#each danhsach2.rows}}
                 <div class="col-lg-3 col-md-6"> 
                     <div class="item">
-                        <a href="./shop/product/id={{this.BookID}}"><img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
+                        <a href="/shop/product/id={{this.BookID}}"><img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
                         <a href="/shop/product/id={{this.BookID}}"><h3 class="favorite-book-align" >{{this.BookName}}</h3></a>
                         <p class="favorite-book-align">{{this.Author}}</p>
                         <h6 class="favorite-book-align"><span class="price">{{this.Price}}đ</span> / <a href="/shop/product/id={{this.BookID}}">Mua ngay</a></h6>
@@ -97,7 +97,7 @@
                 {{/each}}
             </div>
             <div class="btn-sec">
-                <a href="shop" class="btn gray-btn">Xem tất cả sách</a>
+                <a href="/shop?page=1" class="center-submit" id="find-filter"><button class="submit-decoration" id="find-filter-btn">TẤT CẢ SÁCH</button></a>
             </div>
         </div>
     </section>

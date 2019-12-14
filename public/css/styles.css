@@ -1345,3 +1345,42 @@ footer {
   display:flex;
   justify-content: center;
 }
+.advanced-filter{
+  float: right;
+}
+.shop-container{
+  clear:right;
+}
+.filter-img{
+  width:100%;
+}
+.button-filter{
+  width: 40px;
+
+  border: none;
+}
+.collapse-filter{
+  display: none;
+  padding: 30px 100px 0px 100px;
+}
+.filter-elements{
+  display: block;
+}
+.filter-info-container{
+  border: 1px solid orange;
+  padding: 10px;
+}
+.display-inline{
+  display: inline;
+}
+.price-select{
+  margin-right: 30px;
+}
+.price-select-btn{
+  background-color: rgb(221, 221, 221) !important;
+  color: black !important;
+  border: none !important;
+}
+.shopping-cart{
+  width: 30px;
+}

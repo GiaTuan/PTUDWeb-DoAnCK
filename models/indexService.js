@@ -1,4 +1,4 @@
-var pool = require('../../connection.js');
+var pool = require('../connection.js');
 module.exports.getIndex = function(req, res, next) {
     pool.connect(function(err, client, done){
       
@@ -10,12 +10,12 @@ module.exports.getIndex = function(req, res, next) {
             done();
             if(req.isAuthenticated())
             {
-              res.render('user/index',{layout: 'layout2',danhsach: result1,danhsach2: result2, username: req.user});
+              console.log(req);
+              res.render('index',{layout: 'layout2',danhsach: result1,danhsach2: result2, username: req.user});
             }
             else
             {
-              console.log(result2);
-              res.render('user/index',{danhsach: result1,danhsach2: result2});
+              res.render('index',{danhsach: result1,danhsach2: result2});
             }
           });
       });

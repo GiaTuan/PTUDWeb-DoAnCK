@@ -10,12 +10,28 @@ module.exports.getLanguage = function(req, res, next) {
 
       client.query('SELECT * FROM "Books"  WHERE "BookLanguage"=' + '\'' + req.params.id +'\'' , function (err, result) {
           const page = req.query.page;
+          const sort = req.query.sort;
+
           const numbersOfBooksPerPage = 6;
 
           const numbersOfBooks = result.rows.length;
           const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
-          console.log('SELECT * FROM "Books"  WHERE "BookLanguage"=' + '\'' + req.params.id +'\'' +' LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString());
-          client.query('SELECT * FROM "Books"  WHERE "BookLanguage"=' + '\'' + req.params.id +'\'' +' LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString(), function (err, result2) 
+          
+          let queryString;
+          if(sort === undefined)
+          {
+              queryString= 'SELECT * FROM "Books"  WHERE "BookLanguage"=' + '\'' + req.params.id +'\'' +' LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString();
+          }
+          else if(sort === 'asc')
+          {
+            queryString= 'SELECT * FROM "Books"  WHERE "BookLanguage"=' + '\'' + req.params.id +'\'' +'ORDER BY "Price" ASC LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString();
+          }
+          else if(sort === 'desc')
+          {
+            queryString= 'SELECT * FROM "Books"  WHERE "BookLanguage"=' + '\'' + req.params.id +'\'' +'ORDER BY "Price" DESC LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString();
+          }
+
+          client.query(queryString , function (err, result2) 
           {
             done();
             if(err){
