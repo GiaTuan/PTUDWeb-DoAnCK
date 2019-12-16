@@ -1,6 +1,7 @@
 <div class="advanced-filter">
-    <button class="button-filter" id="filter-button"><img src="/images/filter.png" class="filter-img"></button>
-    <div class="dropdown display-inline price-select">
+    <div class="dropdown display-inline">
+        <input type="search" id="search" placeholder="Tìm kiếm sản phẩm" value="{{query.search}}">
+        <a id="find" href=#""><button>Tìm kiếm</button></a>
         <button class="btn btn-secondary dropdown-toggle price-select-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sắp xếp theo giá
         </button>
@@ -9,6 +10,8 @@
             <a class="dropdown-item" href="#" id = "price-decrease">Giảm dần</a>
         </div>
     </div>
+    <button class="button-filter" id="filter-button"><img src="/images/filter.png" class="filter-img"></button>
+
 </div>
 <br>
 <div class="collapse-filter" id="filter-info">
@@ -135,10 +138,13 @@
             <div class="d-flex flex-sm-wrap">
                 {{#each danhsach.rows}}
                 <div class="p-2 bd-highlight book-container">
-                    <a href="/shop/product/id={{this.BookID}}"><img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
-                    <a href="/shop/product/id={{this.BookID}}"><h5 class="favorite-book-align shop-book-title" >{{this.BookName}}</h5></a>
+                    <a href="/shop/product/id={{this.BookID}}?page=1"><img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img"></a>
+                    <a href="/shop/product/id={{this.BookID}}?page=1" class="book-title"><h5 class="favorite-book-align shop-book-title" >{{this.BookName}}</h5></a>
                     <p class="favorite-book-align">{{this.Author}}</p>
-                    <h6 class="favorite-book-align"><span class="price">{{this.Price}}đ</span> / <a href="/shop/product/id={{this.BookID}}">Mua ngay</a></h6>           
+                    <h6 class="favorite-book-align">
+                        <span class="price-style">{{this.Price}} đ</span> / <a href="/shop/product/id={{this.BookID}}?page=1" class="buy-now" >Mua ngay</a>
+                    </h6>                   
+                   
                 </div>
                 {{/each}}
             </div>
@@ -157,18 +163,45 @@
         let href = window.location.pathname + "?page=";      
         let sort = "";
         let find = "";
+        let search = "";
+        let indexOfSearch = -1;
+        let indexOfSort = -1;
+        indexOfSearch = window.location.href.indexOf("&search");
+        indexOfSort = window.location.href.indexOf("&sort");
+
         if(window.location.href.includes('find'))
         {
             const substr = window.location.href.indexOf('&');
-            find = window.location.href.substring(substr);  
-            console.log(href);     
-            console.log(find); 
+            let index = -1;
+            if(indexOfSearch !== -1 && indexOfSort !== -1)
+            {
+                index =indexOfSearch > indexOfSort ?  indexOfSort : indexOfSearch;
+                find = window.location.href.substring(substr,index);  
+            }
+            else if (indexOfSearch > 0 && indexOfSort === -1)
+            {
+                find = window.location.href.substring(substr,indexOfSearch);  
+            }
+            else if (indexOfSort > 0 && indexOfSearch === -1)
+            {
+                find = window.location.href.substring(substr,indexOfSort);                
+            }
+            else find = window.location.href.substring(substr);  
+        }
+     
+        if(indexOfSearch !== -1)
+        {
+            if(indexOfSort > indexOfSearch)
+            {
+                search= window.location.href.substring(indexOfSearch,indexOfSort);
+            }
+            else search= window.location.href.substring(indexOfSearch);
         }
         if(window.location.href.includes('sort=asc'))
         {
             sort ="&sort=asc"
         }
-         if(window.location.href.includes('sort=desc'))
+        if(window.location.href.includes('sort=desc'))
         {
             sort ="&sort=desc"
         }
@@ -180,7 +213,7 @@
             const a = document.createElement("a");
             a.appendChild(document.createTextNode(i));
             a.setAttribute("class","page-link");
-            a.setAttribute("href",href+i.toString()+find+sort);
+            a.setAttribute("href",href+i.toString()+find+search+sort);
             li.appendChild(a);
             li.setAttribute("class", "page-item");
             ul.appendChild(li);
@@ -257,5 +290,51 @@
     }
 
     document.getElementById('find-filter-btn').onclick = findFilter;
+
+    function search(){
+        let searchValue = document.getElementById('search').value;
+        
+        for(let i = 0 ;i< searchValue.length; i++)
+        {
+            if(searchValue[i] === ' ')
+            {
+                searchValue = searchValue.replace(searchValue[i],'+');
+            }
+        }
+        searchValue = "&search=" + searchValue;
+        let href = window.location.href
+        const firstIndex = href.indexOf("page");
+        let lastIndex;
+        let i = firstIndex;
+
+        for( i ; ; i++)
+        { 
+            if(href[i] === '&') 
+            {
+                break;
+            }
+            if(href[i] === undefined)
+            {
+                break;
+            }
+
+            lastIndex=i;
+        }
+        lastIndex++;
+        const str = href.substring(firstIndex,lastIndex);
+       
+        href = href.replace(str,"page=1");
+        
+        if(href.includes("&search"))
+        {
+            const indexOfSearch = href.indexOf("&search");
+            const searchString = href.substring(indexOfSearch);
+            href = href.replace(searchString,"");
+        }
+        href += searchValue;
+        document.getElementById('find').href = href;
+    }
+
+    document.getElementById('find').onclick = search;
 </script>
 

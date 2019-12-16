@@ -1,0 +1,65 @@
+<h1>Giỏ hàng</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <div class="container">
+                <div class="row items" id="book1-item">
+                    <div class="col">
+                        <img src="/images/dacnhantam.jpg" class="item-cart">
+                    </div>
+                    <div class="col">
+                        <h3>Đắc nhân tâm</h3>
+                        <a href="#">Xóa</a>
+                    </div>
+                    <div class="col">
+                        <p class="price">200000</p>
+                        <input id="book1-numbers" type="number" min="1" value="1" class="number-books">
+                    </div>
+                </div>
+                <div class="row items" id="book2-item">
+                    <div class="col">
+                        <img src="/images/dacnhantam.jpg" class="item-cart">
+                    </div>
+                    <div class="col">
+                        <h3>Đắc nhân tâm</h3>
+                        <a href="#">Xóa</a>
+                    </div>
+                    <div class="col">
+                        <p class="price">300200</p>
+                        <input id="book2-numbers" type="number" min="1" value="1" class="number-books">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col checkout-inf">
+            <div>
+                <h5 class="display-inline">Thành tiền: </h5>
+                <h3 class="display-inline total-price" id="total"></h3>
+            </div>
+            <div class="">
+                <button class="checkout-btn">TIẾN HÀNH ĐẶT HÀNG</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    window.onload = function(){
+        document.getElementById("total").innerHTML = getTotalPrice();
+    }
+
+    function getTotalPrice(){
+        let total = 0;
+        const items = document.querySelectorAll(".items");
+        console.log(items);
+        //console.log(prices);
+        /*const length = prices.length;
+        for(let i = 0 ; i<length ; i++)
+        {
+            total+=parseFloat(prices[i].innerHTML);
+        }*/
+       return total;
+    }
+</script>

@@ -11,3 +11,12 @@ module.exports.getUserInfo = function(req,res,next){
     logInModel.getUserInfo(req,res,next);
 }
 
+module.exports.changePassword = function(req,res,next)
+{
+    logInModel.changePassword(req,res,next);
+}
+
+module.exports.submitChangePassword = function(req,res,next)
+{
+    logInModel.submitChangePassword(req,res,next);
+}

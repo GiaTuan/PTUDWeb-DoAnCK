@@ -1,0 +1,100 @@
+<div class="form-container">
+    <br>
+    <h3 class="align-center">Thay đổi mật khẩu tài khoản</h3>
+    <br>
+    <form name="sign-in-form" method="POST">
+        <div class="container">
+            <div class="row row-margin">
+                <div class="col-sm-4">
+                    <h6 class="change-title-right">Mật khẩu hiện tại:</h6>
+                </div>
+                <div class="col">
+                    <div>
+                        <input type="password" id="old-password" name="oldpw" class="input-form" required>
+                        <img src="/images/seepassword.png" class="see-password-img" title="Show password"
+                            id="see-password-1">
+                    </div>
+                </div>
+            </div>
+            <div class="row row-margin">
+                <div class="col-sm-4">
+                    <h6 class="change-title-right">Mật khẩu mới:</h6>
+                </div>
+                <div class="col">
+                    <div>
+                        <input type="password" id="new-password" name="newpw" class="input-form" required>
+                        <img src="/images/seepassword.png" class="see-password-img" title="Show password"
+                            id="see-password">
+                    </div>
+                </div>
+            </div>
+            <div class="row row-margin">
+                <div class="col-sm-4">
+                    <h6 class="change-title-right">Xác nhận khẩu mới:</h6>
+                </div>
+                <div class="col">
+                    <div>
+                        <input type="password" id="confirm-new-password" class="input-form" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p id="announce" class="announce-log-in favorite-book-align">{{announce}}</p>
+        <div>
+            <input type="submit" id="submit-change-pw" value="Thay đổi mật khẩu"
+                class="center-submit submit-decoration">
+        </div>
+    </form>
+    <br>
+</div>
+
+<script>
+    function seePassword() {
+        const currentType = document.getElementById('new-password').type;
+        if (currentType === "password") {
+            document.getElementById('see-password').title = "Hide password"
+            document.getElementById('new-password').type = "text";
+            document.getElementById('confirm-new-password').type = "text";
+
+        }
+        else {
+            document.getElementById('see-password').title = "Show password"
+            document.getElementById('new-password').type = "password";
+            document.getElementById('confirm-new-password').type = "password";
+        }
+    }
+    document.getElementById('see-password').onclick = seePassword;
+
+    function seePassword2() {
+        const currentType = document.getElementById('old-password').type;
+        if (currentType === "password") {
+            document.getElementById('see-password').title = "Hide password"
+            document.getElementById('old-password').type = "text";
+        }
+        else {
+            document.getElementById('see-password').title = "Show password"
+            document.getElementById('old-password').type = "password";
+        }
+    }
+    document.getElementById('see-password-1').onclick = seePassword2;
+
+
+
+    function checkPassword(e){
+        const pw1 = document.getElementById('new-password').value;
+        const pw2 = document.getElementById('confirm-new-password').value;
+        if(pw1 !== pw2)
+        {
+            document.getElementById('announce').innerHTML = "Mật khẩu xác nhận không trùng khớp";
+            e.preventDefault();
+        }
+        else if(pw1.length < 6)
+        {
+            document.getElementById('announce').innerHTML = "Mật khẩu mới phải có ít nhất 6 kí tự";
+            e.preventDefault();
+        }
+
+      }
+    document.getElementById('submit-change-pw').onclick = checkPassword;
+
+</script>

@@ -1,7 +1,8 @@
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
 const pool = require('./connection');
-module.exports = function(passport){
+const passport = require('passport');
+
   passport.use('user-local',new LocalStrategy(
     function(username, password, done) {
       console.log('SELECT * FROM "Users"  WHERE "account"='+ '\'' + username +'\'');
@@ -72,7 +73,6 @@ module.exports = function(passport){
   });
   
   passport.deserializeUser(function(username, done) {
-    console.log(isAdmin);
     if(isAdmin)
     {
       pool.query('SELECT * FROM "Admin"  WHERE "adname"='+ '\'' + username +'\'', function(err, user) {
@@ -87,4 +87,5 @@ module.exports = function(passport){
     }
 
   });
-}
+
+  module.exports = passport;

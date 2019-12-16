@@ -1153,9 +1153,8 @@ footer {
   font-style: italic;
   font-size: 14px;
 }
-.book-title{
-  text-transform: uppercase;
-  text-align: center;
+.book-title:hover{
+  text-decoration: none;
 }
 .price-style{
   color: red;
@@ -1193,6 +1192,8 @@ footer {
 .shop-book-title{
   color: black;
   font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
 }
 .filter-container{
   padding: 0 !important;
@@ -1356,7 +1357,7 @@ footer {
 }
 .button-filter{
   width: 40px;
-
+  margin-right: 30px;
   border: none;
 }
 .collapse-filter{
@@ -1373,14 +1374,84 @@ footer {
 .display-inline{
   display: inline;
 }
-.price-select{
-  margin-right: 30px;
-}
 .price-select-btn{
   background-color: rgb(221, 221, 221) !important;
   color: black !important;
   border: none !important;
 }
-.shopping-cart{
+.shopping-cart-img{
   width: 30px;
+}
+.shopping-cart{
+  color: black;
+}
+.shopping-cart:hover{
+  text-decoration: none;
+  color: red;
+  font-weight: bold;
+}
+.comment-title{
+ margin: 10px; 
+}
+.comment-container{
+  width: 80%;
+  margin: 50px auto 10px auto;
+}
+.comment-element{
+  border: 1px solid #a3a3a3;
+  margin: 10px;
+}
+.username-comment{
+  color: #00aeef
+}
+.add-shopping-cart:hover{
+  text-decoration: none;
+}
+.add-shopping-cart-img{
+  width: 20px;
+}
+.buy-now:hover{
+  text-decoration: none;
+}
+.item-cart{
+  width: 70%;
+}
+.checkout-inf{
+  border: 1px solid black;
+  padding: 20px;
+}
+.total-price{
+  float: right;
+  color: red;
+}
+.checkout-btn{
+  display: block;
+  text-align: center;
+  background-color: #ff424e;
+  border: none;
+  width: 100%;
+  height: 50px;
+  color: white;
+  margin: 30px 0px 20px 0px;
+}
+.book-title-2{
+  text-transform: uppercase;
+}
+.fp-modal{
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+.quen-mk-container{
+  width: 50%;
+  margin: auto;
+  background-color: white;
+  padding: 50px
 }

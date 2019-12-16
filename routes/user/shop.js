@@ -9,6 +9,7 @@ const type_controller = require('../../controllers/userControllers/type');
 
 router.get('/',controller.shop);
 router.get('/product/id=:id',book_controller.book);
+router.post('/product/id=:id',book_controller.AddComment);
 router.get('/publisher=:id',publisher_controller.publishers);
 router.get('/lang=:id',language_controller.language);
 router.get('/type=:id',type_controller.type);

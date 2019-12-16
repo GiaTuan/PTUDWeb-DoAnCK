@@ -1,95 +1,89 @@
 {{#with danhsach.rows.[0]}}
-    <div class="container product-container"> 
-        <div class="row">
-            <div class="col">
-                <img src="/images/{{this.bookimg}}" alt="#">
-            </div>
-            <div class="col">
-                <br>
-                <div>
-                    <h2 class="book-title">{{this.BookName}}</h2>
-                <div>
-                <br>
-                <p><strong>Tác giả:</strong> {{this.Author}}</p>
-                <p><strong>NXB:</strong> <a href="" id="publisher">{{this.Publisher}}</a> &nbsp; &nbsp; &nbsp; <strong>Thể loại:</strong> <a href="" id="type">{{this.Type}}</a></p>
-                <p class="book-description-style">{{this.Description}}</p>
-                <h3 class="price-style">{{this.Price}} đ</h3>
-                <br>
-                <div>
-                    <div class="display-inline-block choose-number">
-                        <p class="number-books-title">Số lượng: </p>
-                        <input type="number" value="1" min="1" class="number-books">
-                    </div>
-                    <div class="display-inline-block">
-                        <button class="buy-button">CHỌN MUA</button>
-                    </div>
-                </div>            
-            </div>
+<div class="container product-container">
+    <div class="row">
+        <div class="col">
+            <img src="/images/{{this.bookimg}}" alt="#">
         </div>
+        <div class="col">
+            <br>
+            <div>
+                <h2 class="book-title-2">{{this.BookName}}</h2>
+                <div>
+                    <br>
+                    <p><strong>Tác giả:</strong> {{this.Author}}</p>
+                    <p><strong>NXB:</strong> <a href="" id="publisher">{{this.Publisher}}</a> &nbsp; &nbsp; &nbsp;
+                        <strong>Thể loại:</strong> <a href="" id="type">{{this.Type}}</a></p>
+                    <p class="book-description-style">{{this.Description}}</p>
+                    <h3 class="price-style">{{this.Price}} đ</h3>
+                    <br>
+                    <div>
+                        <div class="display-inline-block choose-number">
+                            <p class="number-books-title">Số lượng: </p>
+                            <input type="number" value="1" min="1" class="number-books">
+                        </div>
+                        <div class="display-inline-block">
+                            <button class="buy-button">CHỌN MUA</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
     </div>
-    {{/with}}
+</div>
+{{/with}}
+{{>comments}}
 
-    <script>
-        function getPublisher(e){
-            e.preventDefault();
-            const publisher= document.getElementById("publisher").textContent;
-            if(publisher === "Nhã Nam")
-            {     
-                window.location.replace("/shop/publisher=NXB-LaoDongNXB-NhaNam?page=1")
-            }
-            
-            else if(publisher === "Nhà Xuất Bản Hội Nhà Văn")
-            {     
-                window.location.replace("/shop/publisher=NXB-HNV?page=1")
-            }
-
-            else if(publisher === "Nhà Xuất Bản Trẻ")
-            {     
-                window.location.replace("/shop/publisher=NXB-Tre?page=1")
-            }
-
-            else if(publisher === "Nhà Xuất Bản Lao Động")
-            {     
-                window.location.replace("/shop/publisher=NXB-LaoDong?page=1")
-            }
-
-            else if(publisher === "Nhà Xuất Bản Tổng hợp TP.HCM")
-            {     
-                window.location.replace("/shop/publisher=NXB-TH?page=1")
-            }
-
-             else if(publisher === "Nhà Xuất Bản Tri Thức")
-            {     
-                window.location.replace("/shop/publisher=NXB-TriThuc?page=1")
-            }
-
-            else if(publisher === "Nhà Xuất Bản Thế Giới")
-            {     
-                window.location.replace("/shop/publisher=NXB-TheGioi?page=1")
-            }
+<script>
+    function getPublisher(e) {
+        e.preventDefault();
+        const publisher = document.getElementById("publisher").textContent;
+        if (publisher === "Nhã Nam") {
+            window.location.replace("/shop/publisher=NXB-LaoDongNXB-NhaNam?page=1")
         }
 
-         function getType(e){
-            e.preventDefault();
-            const typeName= document.getElementById("type").textContent;
-            console.log(typeName);
-            if(typeName === "Tiểu thuyết")
-            {     
-                window.location.replace("/shop/type=TieuThuyet?page=1")
-            }
-            
-            else if(typeName === "Tự truyện")
-            {     
-                window.location.replace("/shop/type=TuTruyen?page=1")
-            }
-
-            else if(typeName === "Văn học")
-            {     
-                window.location.replace("/shop/type=VanHoc?page=1")
-            }
+        else if (publisher === "Nhà Xuất Bản Hội Nhà Văn") {
+            window.location.replace("/shop/publisher=NXB-HNV?page=1")
         }
-        document.getElementById("publisher").onclick=getPublisher;
 
-        document.getElementById("type").onclick=getType;
-    </script>
+        else if (publisher === "Nhà Xuất Bản Trẻ") {
+            window.location.replace("/shop/publisher=NXB-Tre?page=1")
+        }
+
+        else if (publisher === "Nhà Xuất Bản Lao Động") {
+            window.location.replace("/shop/publisher=NXB-LaoDong?page=1")
+        }
+
+        else if (publisher === "Nhà Xuất Bản Tổng hợp TP.HCM") {
+            window.location.replace("/shop/publisher=NXB-TH?page=1")
+        }
+
+        else if (publisher === "Nhà Xuất Bản Tri Thức") {
+            window.location.replace("/shop/publisher=NXB-TriThuc?page=1")
+        }
+
+        else if (publisher === "Nhà Xuất Bản Thế Giới") {
+            window.location.replace("/shop/publisher=NXB-TheGioi?page=1")
+        }
+    }
+
+    function getType(e) {
+        e.preventDefault();
+        const typeName = document.getElementById("type").textContent;
+        console.log(typeName);
+        if (typeName === "Tiểu thuyết") {
+            window.location.replace("/shop/type=TieuThuyet?page=1")
+        }
+
+        else if (typeName === "Tự truyện") {
+            window.location.replace("/shop/type=TuTruyen?page=1")
+        }
+
+        else if (typeName === "Văn học") {
+            window.location.replace("/shop/type=VanHoc?page=1")
+        }
+    }
+    document.getElementById("publisher").onclick = getPublisher;
+
+    document.getElementById("type").onclick = getType;
+</script>

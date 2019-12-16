@@ -1,0 +1,72 @@
+
+<div class="comment-container">
+    <h1 class="comment-title">ĐÁNH GIÁ SẢN PHẨM</h1>
+    <p>Thêm đánh giá</p>
+    <form name="add-comment-form" method="POST">
+        <br>
+        <div class="container">
+            <div class="row row-margin">
+                <div class="col-sm-4">
+                    <h6 class="change-title-right">Tên người dùng:</h6>
+                </div>
+                <div class="col">
+                    <input type="text" name="usercomment" id="account" class="input-form" value="{{username}}" placeholder="Điền tên người dùng"
+                        required> 
+                </div>
+            </div>
+            <div class="row row-margin">
+                <div class="col-sm-4 ">
+                    <h6 class="change-title-right">Đánh giá: </h6>
+                </div>
+                <div class="col">
+                    <input type="text" name="comment" class="input-form" placeholder="Đánh giá sản phẩm" required>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="submit" id="submit-comment" name="submit-comment" value="Gửi đánh giá"
+                class="center-submit submit-decoration">
+        </div>
+        <br>
+    </form>
+    <div class="container">
+        {{#each binhluan.rows}}
+        <div class="row comment-element">
+            <div class="col-3">
+                <h5 class="username-comment">{{this.username}}</h5>
+            </div>
+            <div class="col">
+                <p>{{this.comment}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <nav aria-label="Page navigation example" class="display-pages">
+        <ul class="pagination" id="pages">
+            <li></li>
+        </ul>
+    </nav>
+</div>
+
+
+<script>
+    window.onload = function(){
+        const pages = {{numberOfCmts}};
+        let href = window.location.pathname;
+        console.log(href);
+        href += "?page=";
+        for(let i = 1 ; i <= pages ; i++)
+        {
+            const ul = document.getElementById('pages');
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.appendChild(document.createTextNode(i));
+            a.setAttribute("class","page-link");
+            a.setAttribute("href",href+i.toString());
+            li.appendChild(a);
+            li.setAttribute("class", "page-item");
+            ul.appendChild(li);
+        }
+    }
+
+</script>

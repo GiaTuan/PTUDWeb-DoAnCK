@@ -24,8 +24,22 @@
                         <h5>Miễn phí vận chuyển cho hóa đơn trên 1.000.000đ</h5></div>
                    
                     <div class="col-md-3">
-                        <a href="/logup" class="sign-in-button" >Đăng ký</a>
-                        <a href="/login" class="sign-in-button" >Đăng nhập</a> 
+                        {{#if isLogin}}
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle sign-in-account" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{username}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/user/info">Thông tin tài khoản</a>
+                                    <a class="dropdown-item" href="/user/change-pw">Thay đổi mật khẩu</a>
+                                    <a class="dropdown-item" href="/logout">Đăng xuất</a>
+                                </div>
+                            </div>
+                        {{else}}
+                            <a href="/logup" class="sign-in-button" >Đăng ký</a>
+                            <a href="/login" class="sign-in-button" >Đăng nhập</a> 
+                        {{/if}}
+                        
                     </div>
                     <div class="col-md-2">
                        
@@ -54,12 +68,8 @@
                             
                         </ul>
                         <div class="cart my-2 my-lg-0">
-                            <a href="#"><img src="/images/shopping-cart.png" class="shopping-cart"></a>
+                            <a href="/checkout/cart" class="shopping-cart"><img src="/images/shopping-cart.png" class="shopping-cart-img"> Giỏ hàng</a>
                         </div>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
-                            <span class="fa fa-search"></span>
-                        </form>
                     </div>
                 </nav>
             </div>

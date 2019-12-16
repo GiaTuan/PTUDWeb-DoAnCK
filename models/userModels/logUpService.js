@@ -8,16 +8,24 @@ module.exports.getLogUp = function(req, res, next) {
 
 module.exports.getLogUpComplete = function(req,res,next){
     pool.connect(function(err, client, done){  
-        client.query('SELECT account FROM "Users"  WHERE "account"='+ '\'' + req.body.username +'\'', function (err, result) {
+        console.log('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.body.username +'\' OR' + '"email"='+ '\'' + req.body.email);
+        client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.body.username +'\' OR' + '"email"='+ '\'' + req.body.email + '\'' , function (err, result) {
             if(err){
                 return console.log('error running query', err);
             }
             if(result.rows[0] !== undefined)
             {
-                if(req.body.username === result.rows[0].account)
+                let announce;
+                if(result.rows[0].email === req.body.email)
                 {
-                    res.render('user/logup',{announce: 'Tài khoản đã tồn tại'});
+                    announce = "Email đã tồn tại";
                 }
+                else if(req.body.username === result.rows[0].account)
+                {
+                    announce = "Tài khoản đã tồn tại"
+                }
+                res.render('user/logup',{announce});
+                
              }
             else
             {
@@ -26,7 +34,6 @@ module.exports.getLogUpComplete = function(req,res,next){
                 const email = req.body.email;
                 const address = req.body.address;
                 const phone = req.body.phone;
-                //console.log('INSERT INTO "testUser" VALUES (' + '\'' + req.body.username+ '\',\'' + req.body.password + '\',\'' + name + '\',\'' + email + '\',\'' + address + '\',\'' + phone + '\');'); 
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(password, salt, function(err, hash) {
                         client.query('INSERT INTO "Users" VALUES (' + '\'' + req.body.username+ '\',\'' +hash + '\',\'' + name + '\',\'' + email + '\',\'' + address + '\',\'' + phone + '\');', function (err, result) {

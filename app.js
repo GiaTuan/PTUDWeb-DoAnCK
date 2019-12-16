@@ -6,7 +6,7 @@ var logger = require('morgan');
 var session = require("express-session")
 
 var bodyParser = require("body-parser")
-var passport = require('passport');
+var passport = require('./passport');
 var hbs = require('hbs');
 
 //===================================================
@@ -15,15 +15,12 @@ var shopRouter = require('./routes/user/shop')
 var logUpRouter = require('./routes/user/logup')
 var logInRouter = require('./routes/user/login')
 var logOutRouter =require('./routes/user/logout')
-var infoRouter =require('./routes/user/info')
-
+var userRouter =require('./routes/user/user')
+var checkoutRouter = require('./routes/user/checkout')
 
 var adminRouter =require('./routes/admin/index')
 
 var app = express();
-
-require('./passport')(passport);
-
 
 
 // view engine setup
@@ -50,8 +47,9 @@ app.use('/shop', shopRouter);
 app.use('/logup',logUpRouter);
 app.use('/login',logInRouter);
 app.use('/logout',logOutRouter);
-app.use('/info',infoRouter);
+app.use('/user',userRouter);
 app.use('/admin',adminRouter);
+app.use('/checkout',checkoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

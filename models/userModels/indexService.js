@@ -1,23 +1,13 @@
 var pool = require('../../connection.js');
 module.exports.getIndex = function(req, res, next) {
-    pool.connect(function(err, client, done){
-      
-      if(err) {
-          return console.log(err);
-      }
-      client.query('SELECT * FROM "RecommendBooks"', function (err, result1) {
-          client.query('SELECT * FROM "FavoriteBooks"', function (err, result2) {
-            done();
-            if(req.isAuthenticated())
-            {
-              res.render('user/index',{layout: 'layout2',danhsach: result1,danhsach2: result2, username: req.user});
-            }
-            else
-            {
-              console.log(result2);
-              res.render('user/index',{danhsach: result1,danhsach2: result2});
-            }
-          });
-      });
-    });
+  ;(async () => {
+    const client = await pool.connect();
+    try {
+        const result1 = await client.query('SELECT * FROM "RecommendBooks"');
+        const result2 = await client.query('SELECT * FROM "FavoriteBooks"');
+        res.render('user/index',{danhsach: result1,danhsach2: result2, username: req.user, isLogin: req.isAuthenticated()}); 
+    } finally {
+      client.release()
+    }
+  })().catch(err => next(err))
 }
