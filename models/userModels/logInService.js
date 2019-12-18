@@ -17,7 +17,7 @@ module.exports.submitLogIn = function(req,res,next){
                
                 if(result.rows.length > 0)
                 {
-                    let tempPass = "PTUDWK17";
+                    let tempPass = result.rows[0].account+"_PTUDWK17";
 
                     bcrypt.genSalt(10, function(err, salt) {
                         bcrypt.hash(tempPass, salt, function(err, hash) {
@@ -40,9 +40,9 @@ module.exports.submitLogIn = function(req,res,next){
                 
                     var mailOptions = {
                     from: 'ptudweb123@gmail.com',
-                    to: 'tuan0949@gmail.com',
+                    to: email,
                     subject: 'Lấy lại mật khẩu tài khoản',
-                    text: 'Mật khẩu tạm thời của bạn: ' + tempPass
+                    text: 'Mật khẩu tạm thời của bạn: ' + tempPass + '\n HÃY ĐỔI LẠI MẬT KHẨU KHI ĐĂNG NHẬP TÀI KHOẢN'
                     };
                 
                     transporter.sendMail(mailOptions, function(error, info){
@@ -112,7 +112,7 @@ module.exports.getUserInfo =  function(req,res,next){
 module.exports.changePassword = function(req,res,next){
     if(req.isAuthenticated())
     {
-        res.render('user/change-pw');
+        res.render('user/change-pw',{username: req.user,isLogin: req.isAuthenticated()});
     }
     else
     {
@@ -148,11 +148,11 @@ module.exports.submitChangePassword = function(req,res,next)
                             });
                         });
                     });
-                    res.redirect('user/change-pw',{announce: 'THAY ĐỔI MẬT KHẨU THÀNH CÔNG!'});
+                    res.render('user/change-pw',{announce: 'THAY ĐỔI MẬT KHẨU THÀNH CÔNG!',username: req.user,isLogin: req.isAuthenticated()});
                 }
                 else
                 {
-                    res.render('user/change-pw',{announce: 'Mật khẩu không chính xác'});
+                    res.render('user/change-pw',{announce: 'Mật khẩu không chính xác',username: req.user,isLogin: req.isAuthenticated()});
                 }
             });
                  

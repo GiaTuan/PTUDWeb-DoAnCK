@@ -2,27 +2,28 @@
 <div class="container product-container">
     <div class="row">
         <div class="col">
-            <img src="/images/{{this.bookimg}}" alt="#">
+            <img src="/images/{{this.bookimg}}" alt="#" id="book-img">
         </div>
         <div class="col">
             <br>
             <div>
-                <h2 class="book-title-2">{{this.BookName}}</h2>
+                <h2 class="book-title-2" id="book-name">{{this.BookName}}</h2>
                 <div>
                     <br>
                     <p><strong>Tác giả:</strong> {{this.Author}}</p>
                     <p><strong>NXB:</strong> <a href="" id="publisher">{{this.Publisher}}</a> &nbsp; &nbsp; &nbsp;
                         <strong>Thể loại:</strong> <a href="" id="type">{{this.Type}}</a></p>
                     <p class="book-description-style">{{this.Description}}</p>
-                    <h3 class="price-style">{{this.Price}} đ</h3>
+                    <h3 class="price-style display-inline" id="book-price" >{{this.Price}}</h3>
+                    <h3 class="display-inline price-style"> đ</h3>
                     <br>
                     <div>
                         <div class="display-inline-block choose-number">
                             <p class="number-books-title">Số lượng: </p>
-                            <input type="number" value="1" min="1" class="number-books">
+                            <input type="number" value="1" min="1" class="number-books" id="quantity">
                         </div>
                         <div class="display-inline-block">
-                            <button class="buy-button">CHỌN MUA</button>
+                            <button class="buy-button" onclick="addToCart()">CHỌN MUA</button>
                         </div>
                     </div>
                 </div>
@@ -35,6 +36,30 @@
 {{>comments}}
 
 <script>
+
+    function addToCart(){
+        const name= document.getElementById('book-name').textContent;
+        let item = localStorage.getItem(name);
+        item= JSON.parse(item);
+        if(item !== null)
+        {
+            item.qty += parseInt(document.getElementById('quantity').value);
+            localStorage.setItem(name,JSON.stringify(item));
+        }
+        else
+        {
+        let img = document.getElementById('book-img').src;
+        const price= parseFloat(document.getElementById('book-price').textContent);
+        const qty= parseInt(document.getElementById('quantity').value);
+        img = img.slice(img.indexOf("images")+7);
+        item = {name,img,price,qty};
+        localStorage.setItem(name,JSON.stringify(item));
+        }
+    }
+
+
+
+
     function getPublisher(e) {
         e.preventDefault();
         const publisher = document.getElementById("publisher").textContent;
@@ -70,7 +95,6 @@
     function getType(e) {
         e.preventDefault();
         const typeName = document.getElementById("type").textContent;
-        console.log(typeName);
         if (typeName === "Tiểu thuyết") {
             window.location.replace("/shop/type=TieuThuyet?page=1")
         }

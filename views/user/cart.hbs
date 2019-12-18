@@ -1,36 +1,10 @@
-<h1>Giỏ hàng</h1>
-<div class="container">
+<br>
+<h3 class="cart-title">Giỏ hàng của bạn</h3>
+<br>
+<div class="container ">
     <div class="row">
         <div class="col-9">
-            <div class="container">
-                <div class="row items" id="book1-item">
-                    <div class="col">
-                        <img src="/images/dacnhantam.jpg" class="item-cart">
-                    </div>
-                    <div class="col">
-                        <h3>Đắc nhân tâm</h3>
-                        <a href="#">Xóa</a>
-                    </div>
-                    <div class="col">
-                        <p class="price">200000</p>
-                        <input id="book1-numbers" type="number" min="1" value="1" class="number-books">
-                    </div>
-                </div>
-                <div class="row items" id="book2-item">
-                    <div class="col">
-                        <img src="/images/dacnhantam.jpg" class="item-cart">
-                    </div>
-                    <div class="col">
-                        <h3>Đắc nhân tâm</h3>
-                        <a href="#">Xóa</a>
-                    </div>
-                    <div class="col">
-                        <p class="price">300200</p>
-                        <input id="book2-numbers" type="number" min="1" value="1" class="number-books">
-                    </div>
-                </div>
-
-            </div>
+            <div class="container" id="cart"></div>
         </div>
         <div class="col checkout-inf">
             <div>
@@ -38,28 +12,124 @@
                 <h3 class="display-inline total-price" id="total"></h3>
             </div>
             <div class="">
-                <button class="checkout-btn">TIẾN HÀNH ĐẶT HÀNG</button>
+                <a href="#" id="checkout-link" class="checkout-btn"><button class="checkout-btn" onclick="clickCheckOut()">TIẾN HÀNH ĐẶT HÀNG</button></a>
             </div>
         </div>
 
     </div>
 </div>
-
+<br>
+<br>
+<br>
 <script>
-    window.onload = function(){
-        document.getElementById("total").innerHTML = getTotalPrice();
+    (function(){
+        getCart();  
+
+        changeQuantity();
+
+        deleteItem();
+
+    })();
+    function clickCheckOut(e){
+        if(localStorage.length === 0)
+        {
+            window.alert('Bạn chưa thêm sản phẩm vào giỏ hàng');
+        }
+        else
+        {
+            document.getElementById('checkout-link').href = "/checkout/order";
+        }
+    }
+    
+    function getCart()
+    {
+        //thêm sản phẩm vào giỏ hàng
+        const cart = document.getElementById('cart');
+        cart.innerHTML = "";
+        const keys = Object.keys(localStorage);
+        const length = keys.length
+        console.log(cart);
+        //tổng tiền
+        let total = 0;
+
+        for(let i = 0 ; i< length ; i++)
+        {
+            //lấy sản phẩm tử localStorage
+            const item = JSON.parse(localStorage.getItem(keys[i]));
+
+            //tính tổng tiền
+            total+= item.price*item.qty;
+
+            //tạo sản phẩm trong giỏ hàng
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('row','cart-item')
+            cartItem.innerHTML = 
+                    `<div class="col">
+                        <img src="/images/${item.img}" class="item-cart">
+                    </div>
+                    <div class="col">
+                        <h4 class="book-name-cart">${item.name}</h4>
+                        <a href="#" class="delete-item">Xóa</a>
+                    </div>
+                    <div class="col">
+                        <p class="price display-inline price-style">${item.price}</p>
+                        <p class="display-inline price-style"> đ &nbsp;&nbsp;&nbsp;</p>
+                        <input onKeyDown="return false" type="number" min="1" value="${item.qty}" class="number-books">
+                    </div>`;
+            cart.appendChild(cartItem);
+        }
+
+        console.log(total);
+        //in tổng giá tiền ra màn hình
+        document.getElementById('total').innerHTML = total + " đ";
     }
 
-    function getTotalPrice(){
+    function deleteItem(){
+        const deleteItems= document.querySelectorAll('.delete-item');
+        deleteItems.forEach(function(item){
+            item.addEventListener("click",function(event){
+                const key = event.target.previousElementSibling.textContent;
+                localStorage.removeItem(key);
+                event.target.parentElement.parentElement.remove();
+                const total = getTotal();
+                document.getElementById('total').innerHTML = total + " đ";
+
+            });
+        });
+    }
+
+    function changeQuantity(){
+        const deleteItems= document.querySelectorAll('.number-books');
+        deleteItems.forEach(function(item){
+            item.addEventListener("change",function(event){
+                const qty = event.target.value;
+                const key = event.target.parentElement.previousElementSibling.querySelector('.book-name-cart').textContent;
+                const item = JSON.parse(localStorage.getItem(key));
+                item.qty = qty;
+                localStorage.setItem(key,JSON.stringify(item));
+                const total = getTotal();
+                document.getElementById('total').innerHTML = total + " đ";
+
+            });
+        });
+    }
+
+    function getTotal()
+    {
+        const keys = Object.keys(localStorage);
+        const length = keys.length
+
         let total = 0;
-        const items = document.querySelectorAll(".items");
-        console.log(items);
-        //console.log(prices);
-        /*const length = prices.length;
-        for(let i = 0 ; i<length ; i++)
+
+        for(let i = 0 ; i< length ; i++)
         {
-            total+=parseFloat(prices[i].innerHTML);
-        }*/
-       return total;
+            //lấy sản phẩm tử localStorage
+            const item = JSON.parse(localStorage.getItem(keys[i]));
+
+            //tính tổng tiền
+            total+= item.price*item.qty;
+        }
+        return total;
+
     }
 </script>

@@ -1,0 +1,65 @@
+<div class="checkout-form">
+    <form name="checkout-form" method="post">
+        <br>
+        <h2 class="favorite-book-align">ĐIỀN THÔNG TIN GIAO HÀNG</h2><br>
+        {{#with user.rows.[0]}}
+        <div class="container">
+            <div class="row row-margin">
+                <div class="checkout-element">
+                    <label for="customer-name" class="label-checkout">Họ tên:</label>
+                    <input type="text" name="name" id="customer-name" class="input-checkout-form"
+                        placeholder="Điền họ tên" value="{{this.name}}" required>
+                </div>
+            </div>
+            <div class="row row-margin">
+                <div class="checkout-element">
+                    <label for="customer-addr" class="label-checkout">Địa chỉ:</label>
+                    <input type="text" name="addr" id="customer-addr" class="input-checkout-form"
+                    value="{{this.address}}" placeholder="Điền địa chỉ" required>
+                </div>
+            </div>
+            <div class="row row-margin">
+                <div class="checkout-element">
+                    <label for="customer-phone" class="label-checkout">Số điện thoại:</label>
+                    <input type="text" name="phone" id="customer-phone" class="input-checkout-form"
+                     value="{{this.phone}}"   placeholder="Điền số điện thoại" required>
+                </div>
+            </div>
+            <div class="row row-margin">
+                <div class="checkout-element">
+                    <label for="customer-payment" class="label-checkout">Phương thức thanh toán:</label>
+                    <select id="customer-payment" class="input-checkout-form" name="payment" required>
+                        <option value="cod">Thanh toán khi nhận hàng</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        {{/with}}
+        <div>
+            <input type="submit" name="submitCheckout" value="Tiếp theo" class="center-submit submit-decoration" id="checkout-submit">
+        </div>
+        <br>
+    </form>
+</div>
+<br>
+<br>
+
+<script>
+   
+    function submitCheckout(e){
+
+        const keys = Object.keys(localStorage);
+        const length = keys.length
+        let items = [];
+        for(let i = 0 ; i< length ; i++)
+        {
+            const item = JSON.parse(localStorage.getItem(keys[i]));
+            items.push(item);
+        }
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/checkout/order", true);
+        xhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+        xhttp.send(JSON.stringify(items));
+    }
+    document.getElementById('checkout-submit').onclick = submitCheckout;
+</script>

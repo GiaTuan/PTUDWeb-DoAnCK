@@ -50,7 +50,7 @@
 
 
 <script>
-    window.onload = function(){
+    (function(){
         const pages = {{numberOfCmts}};
         let href = window.location.pathname;
         console.log(href);
@@ -67,6 +67,6 @@
             li.setAttribute("class", "page-item");
             ul.appendChild(li);
         }
-    }
+    })();
 
 </script>

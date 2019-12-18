@@ -1417,12 +1417,15 @@ footer {
   width: 70%;
 }
 .checkout-inf{
-  border: 1px solid black;
   padding: 20px;
 }
 .total-price{
   float: right;
   color: red;
+}
+.checkout-btn:hover{
+  text-decoration: none;
+  background-color: red;
 }
 .checkout-btn{
   display: block;
@@ -1454,4 +1457,41 @@ footer {
   margin: auto;
   background-color: white;
   padding: 50px
+}
+.book-name-cart{
+  text-transform: uppercase;
+
+}
+.cart-title{
+  background-color: rgb(240, 240, 240);
+  padding: 10px;
+}
+.cart-item{
+  border: 1px solid black;
+  margin: 5px;
+  padding: 5px;
+}
+.checkout-form{
+  width: 70%;
+  margin: auto;
+  background-color: #f2f2f2;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 5px 20px 15px 20px;
+}
+.label-checkout{
+  display: block;
+  color: #000;
+  font-size: 1.2em;
+}
+.checkout-element{
+  width: 50%;;
+  margin: auto;
+}
+.input-checkout-form{
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
