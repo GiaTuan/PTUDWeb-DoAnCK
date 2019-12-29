@@ -8,6 +8,7 @@
             <br>
             <div>
                 <h2 class="book-title-2" id="book-name">{{this.BookName}}</h2>
+                <p>Mã sản phẩm: <span id="book-id">{{this.BookID}}</span></p>
                 <div>
                     <br>
                     <p><strong>Tác giả:</strong> {{this.Author}}</p>
@@ -23,7 +24,7 @@
                             <input type="number" value="1" min="1" class="number-books" id="quantity">
                         </div>
                         <div class="display-inline-block">
-                            <button class="buy-button" onclick="addToCart()">CHỌN MUA</button>
+                            <button class="buy-button" onclick="addToCart()">THÊM VÀO GIỎ HÀNG</button>
                         </div>
                     </div>
                 </div>
@@ -38,22 +39,23 @@
 <script>
 
     function addToCart(){
-        const name= document.getElementById('book-name').textContent;
-        let item = localStorage.getItem(name);
+        const id= document.getElementById('book-id').textContent;
+        let item = localStorage.getItem(id);
         item= JSON.parse(item);
         if(item !== null)
         {
             item.qty += parseInt(document.getElementById('quantity').value);
-            localStorage.setItem(name,JSON.stringify(item));
+            localStorage.setItem(id,JSON.stringify(item));
         }
         else
         {
         let img = document.getElementById('book-img').src;
+        const name= document.getElementById('book-name').textContent;
         const price= parseFloat(document.getElementById('book-price').textContent);
         const qty= parseInt(document.getElementById('quantity').value);
         img = img.slice(img.indexOf("images")+7);
-        item = {name,img,price,qty};
-        localStorage.setItem(name,JSON.stringify(item));
+        item = {id,name,img,price,qty};
+        localStorage.setItem(id,JSON.stringify(item));
         }
     }
 

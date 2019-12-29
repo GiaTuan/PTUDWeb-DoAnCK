@@ -1,0 +1,30 @@
+<h1>Lịch sử mua hàng</h1>
+<div class=" history-order">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+                <th scope="col">Địa chỉ nhận</th>
+                <th scope="col">Ngày mua</th>
+                <th scope="col">Phương thức thanh toán</th>
+                <th scope="col">Trạng thái đơn hàng</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each danhsach.rows}}
+            <tr>
+                <th scope="row" class="book-name-cart">{{this.productname}}</th>
+                <td>{{this.quantity}}</td>
+                <td>{{this.total}}</td>
+                <td>{{this.addr}}</td>
+                <td>{{this.date}}</td>
+                <td>{{this.payment}}</td>
+                <td>{{this.state}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

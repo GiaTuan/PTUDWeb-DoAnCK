@@ -20,6 +20,19 @@
       <div class="logo-container">
         <img src="/images/logo.png" class="logo" alt="logo">
       </div>
+      {{#if isAdmin}}
+      <div>
+        <div class="dropdown admin-dropbox">
+            <button class="btn btn-secondary dropdown-toggle sign-in-admin" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{adname}}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/admin/info">Thông tin tài khoản</a>
+                <a class="dropdown-item" href="/admin/logout">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+    {{/if}}
       
     </header>
     {{{body}}}

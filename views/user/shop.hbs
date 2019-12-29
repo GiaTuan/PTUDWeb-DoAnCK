@@ -1,13 +1,13 @@
 <div class="advanced-filter">
     <div class="dropdown display-inline">
-        <input type="search" id="search" placeholder="Tìm kiếm sản phẩm" value="{{query.search}}">
-        <a id="find" href=#""><button>Tìm kiếm</button></a>
+        <input type="search" id="search"  class="search-input" placeholder="Tìm kiếm sản phẩm" value="{{search}}">
+        <a id="find" href=#""><button class="search-button"><img src="/images/search.png" class="filter-img"></button></a>
         <button class="btn btn-secondary dropdown-toggle price-select-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sắp xếp theo giá
+            Sắp xếp sách
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" id="price-increase">Tăng dần</a>
-            <a class="dropdown-item" href="#" id = "price-decrease">Giảm dần</a>
+            <a class="dropdown-item" href="#" id="price-increase">Giá tăng dần</a>
+            <a class="dropdown-item" href="#" id = "price-decrease">Giá giảm dần</a>
         </div>
     </div>
     <button class="button-filter" id="filter-button"><img src="/images/filter.png" class="filter-img"></button>

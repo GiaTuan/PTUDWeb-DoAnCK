@@ -1,0 +1,82 @@
+{{>nav}}
+<div class="form-container">
+    <br>
+    <h2 class="favorite-book-align">THÔNG TIN ĐƠN HÀNG</h2><br>
+    <div class="container">
+        {{#with danhsach.rows.[0]}}
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Tên tài khoản:</label>
+                <h6 type="text" class="input-checkout-form">{{this.username}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Họ tên:</label>
+                <h6 type="text" class="input-checkout-form">{{this.fullname}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-phone" class="label-checkout">Số điện thoại:</label>
+                <h6 type="text" class="input-checkout-form">{{this.phone}}</h6>
+
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Địa chỉ:</label>
+                <h6 type="text" class="input-checkout-form">{{this.addr}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label class="label-checkout">Tên sản phẩm:</label>
+                <h6 type="text" class="input-checkout-form">{{this.productname}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Số lượng:</label>
+                <h6 type="text" class="input-checkout-form">{{this.quantity}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Tổng hóa đơn:</label>
+                <h6 type="text" class="input-checkout-form">{{this.total}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Ngày mua:</label>
+                <h6 type="text" class="input-checkout-form">{{this.date}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Trạng thái hiện tại đơn hàng:</label>
+                <h6 type="text" class="input-checkout-form">{{this.state}}</h6>
+            </div>
+        </div>
+        {{/with}}
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Thay đổi trạng thái đơn hàng:</label>
+                <form method="POST">
+                    <select name="state" class="input-checkout-form" style="display-block">
+                        <option value="Đang vận chuyển">Đang vận chuyển</option>
+                        <option value="Đã thanh toán" >Đã thanh toán</option>
+                        <option value="Hủy">Hủy</option>
+                    </select>
+                   <div>
+                        <input type="submit" value="Thay đổi trạng thái"
+                            class="center-submit submit-decoration" id="checkout-submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+<br>

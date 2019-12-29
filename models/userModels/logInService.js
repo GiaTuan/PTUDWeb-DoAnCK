@@ -46,12 +46,14 @@ module.exports.submitLogIn = function(req,res,next){
                     };
                 
                     transporter.sendMail(mailOptions, function(error, info){
-                    if (error) {
-                    console.log(error);
+                    if (error) 
+                    {
+                        console.log(error);
                     } 
-                    else {
-                    console.log('Email sent: ' + info.response);
-                    res.redirect('login');
+                    else 
+                    {
+                        console.log('Email sent: ' + info.response);
+                        res.redirect('login');
                     }
                     });
                 }
@@ -80,9 +82,28 @@ module.exports.submitLogIn = function(req,res,next){
             {
                 if (err) 
                 { 
-                return next(err); 
+                    return next(err); 
                 }
-                return res.redirect('/');
+                else
+                {
+                    ;(async () => {
+                        const client = await pool.connect();
+                        try {
+                            const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user.rows[0].account +'\'');
+                            console.log(req.user.rows[0].account);
+                            if(result.rows[0].state === "khóa")
+                            {
+                                return res.render('user/login',{announce: 'Tài khoản đã bị khóa'}); 
+                            }
+                            else
+                            {
+                                res.redirect('/');
+                            }        
+                        } finally {
+                        client.release()
+                        }
+                    })().catch(err => next(err))
+                }
             });
         })(req, res, next);
     }
@@ -100,8 +121,35 @@ module.exports.getUserInfo =  function(req,res,next){
             }
             else
             {
-                res.redirect('/logup');
+                res.redirect('/login');
             }        
+        } finally {
+          client.release()
+        }
+    })().catch(err => next(err))
+}
+
+module.exports.updateInfo = (req,res,next) => {
+    ;(async () => {
+        const client = await pool.connect();
+        try {
+            const name = req.body.name;
+            const email =req.body.email;
+            const phone = req.body.phone;
+            const addr= req.body.addr;
+            const checkEmail = await client.query('SELECT * FROM "Users"  WHERE "email"='+ '\'' + email +'\'');
+            if(checkEmail.rows.length > 0)
+            {
+                const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user +'\'');
+                res.render('user/info',{user: result,announce: 'Email đã tồn tại' , username: req.user , isLogin: true});       
+            }
+            else
+            {
+                await client.query("UPDATE \"Users\" SET \"name\" ='" + name + '\',"email"=\''+ email + '\',"address"=\''+ addr + '\',"phone"=\''+ phone + '\' WHERE "account"=' + '\'' + req.user +'\'');      
+                const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user +'\'');
+                res.render('user/info',{user: result,announce: 'Cập nhật thông tin tài khoản thành công' , username: req.user , isLogin: true});
+            }
+            
         } finally {
           client.release()
         }
@@ -155,10 +203,31 @@ module.exports.submitChangePassword = function(req,res,next)
                     res.render('user/change-pw',{announce: 'Mật khẩu không chính xác',username: req.user,isLogin: req.isAuthenticated()});
                 }
             });
-                 
         } finally {
           client.release()
         }
     })().catch(err => next(err))
    
+}
+
+module.exports.getOrders = function(req,res,next)
+{
+    const user = req.user;
+    if(req.isAuthenticated())
+    {
+        ;(async () => {
+            const client = await pool.connect();
+            try {
+                const result = await client.query('SELECT * FROM "Order"  WHERE "username"='+ '\'' + user +'\'');
+                res.render('user/order-history',{danhsach: result, username: req.user , isLogin: true});
+
+            } finally {
+              client.release()
+            }
+        })().catch(err => next(err))
+    }
+    else
+    {
+        res.redirect('/logup');
+    }  
 }

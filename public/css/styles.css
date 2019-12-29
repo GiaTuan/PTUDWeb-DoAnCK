@@ -1495,3 +1495,33 @@ footer {
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+.checkout-cart-title
+{
+  background-color: #fcba68 ;
+}
+.checkout-cart{
+  border: 1px solid #fcba68;
+}
+.checkout-cart-img{
+  width: 100%;
+}
+.checkout-img-container{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.checkout-item{
+  margin: 5px;
+}
+.history-order{
+  width: 90%;
+  margin: auto;
+}
+.search-input{
+  border: 1px solid #cacaca;
+  border-radius: 3px;
+  padding: 5px;
+}
+.search-button{
+  width: 40px;
+  border: none;
+}

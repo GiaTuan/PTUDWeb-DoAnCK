@@ -1,41 +1,43 @@
-{{#with user.rows.[0]}}
-<div class="form-container">
+<form class="form-container" method="POST">
     <br>
     <h2 class="favorite-book-align">THÔNG TIN TÀI KHOẢN</h2><br>
+    {{#with user.rows.[0]}}
     <div class="container">
-        <div class="row row-margin align-title">
-            <div class="col-sm-4 align-title">
-                <h6 class="change-title-right">Họ tên: </h6>
-            </div>
-            <div class="col">
-                <p class="info-border">{{this.name}}</p>
-            </div>
-        </div>
-        <div class="row row-margin align-title">
-            <div class="col-sm-4 ">
-                <h6 class="change-title-right">Email: </h6>
-            </div>
-            <div class="col">
-                <p class="info-border">{{this.email}}</p>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Họ tên:</label>
+                <input type="text" name="name" id="customer-name" class="input-checkout-form" placeholder="Điền họ tên"
+                    value="{{this.name}}" required>
             </div>
         </div>
-        <div class="row row-margin align-title">
-            <div class="col-sm-4 ">
-                <h6 class="change-title-right">Địa chỉ: </h6>
-            </div>
-            <div class="col">
-                <p class="info-border">{{this.address}}</p>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-email" class="label-checkout">Email:</label>
+                <input type="text" name="email" id="customer-email" class="input-checkout-form" value="{{this.email}}"
+                    placeholder="Điền email" required>
             </div>
         </div>
-        <div class="row row-margin align-title">
-            <div class="col-sm-4 ">
-                <h6 class="change-title-right">Số điện thoại: </h6>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-phone" class="label-checkout">Số điện thoại:</label>
+                <input type="text" name="phone" id="customer-phone" class="input-checkout-form" value="{{this.phone}}"
+                    placeholder="Điền số điện thoại" required>
             </div>
-            <div class="col">
-                <p class="info-border">{{this.phone}}</p>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Địa chỉ:</label>
+                <input type="text" name="addr" id="customer-addr" class="input-checkout-form" value="{{this.address}}"
+                    placeholder="Điền địa chỉ" required>
             </div>
         </div>
     </div>
-</div>
+    {{/with}}
+    <p class="announce favorite-book-align" >{{announce}}</p>
+    <br>
+    <div>
+        <input type="submit" value="Cập nhật thông tin" class="center-submit submit-decoration">
+    </div>
+    <br>
+</form>
 <br>
-{{/with}}

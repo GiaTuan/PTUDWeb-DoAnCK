@@ -8,7 +8,6 @@ module.exports.getLogUp = function(req, res, next) {
 
 module.exports.getLogUpComplete = function(req,res,next){
     pool.connect(function(err, client, done){  
-        console.log('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.body.username +'\' OR' + '"email"='+ '\'' + req.body.email);
         client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.body.username +'\' OR' + '"email"='+ '\'' + req.body.email + '\'' , function (err, result) {
             if(err){
                 return console.log('error running query', err);
@@ -34,9 +33,10 @@ module.exports.getLogUpComplete = function(req,res,next){
                 const email = req.body.email;
                 const address = req.body.address;
                 const phone = req.body.phone;
+                const state = "hoạt động";
                 bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(password, salt, function(err, hash) {
-                        client.query('INSERT INTO "Users" VALUES (' + '\'' + req.body.username+ '\',\'' +hash + '\',\'' + name + '\',\'' + email + '\',\'' + address + '\',\'' + phone + '\');', function (err, result) {
+                        client.query('INSERT INTO "Users" VALUES (' + '\'' + req.body.username+ '\',\'' +hash + '\',\'' + name + '\',\'' + email + '\',\'' + address + '\',\'' + phone + '\',\'' + state + '\');', function (err, result) {
                             done();
                             if(err){
                                 return console.log('error running query', err);

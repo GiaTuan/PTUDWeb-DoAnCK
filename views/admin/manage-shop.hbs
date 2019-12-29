@@ -1,0 +1,84 @@
+{{>nav}}
+<div>
+    <form>
+        <label for="type">Thể loại</label>
+        <select name="type" id="type">
+            <option value="">Bỏ chọn</option>
+            <option value="Văn học">Văn học</option>
+            <option value="tieuthuyet">Tiểu thuyết</option>
+            <option value="tutruyen">Tự truyện</option>
+        </select>
+        <label for="lang">Ngôn ngữ</label>
+        <select name="lang" id="lang">
+            <option value="">Bỏ chọn</option>
+            <option value="tiengviet">Tiếng Việt</option>
+            <option value="ngoaingu">Ngoại ngữ</option>
+        </select>
+        <label for="publisher">Nhà xuất bản</label>
+        <select name="publisher" id="publisher">
+            <option value="">Bỏ chọn</option>
+            <option value="NXB-NhaNam">Nhã Nam</option>
+        </select>
+        <input type="submit">
+    </form>
+</div>
+<br>
+<div class=" history-order">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tên sách</th>
+                <th scope="col">Tác giả</th>
+                <th scope="col">Thể loại</th>
+                <th scope="col">Ngôn ngữ</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each danhsach.rows}}
+            <tr>
+                <th scope="row" class="book-name-cart">{{this.BookName}}</th>
+                <td>{{this.Author}}</td>
+                <td>{{this.Type}}</td>
+                <td>{{this.BookLanguage}}</td>
+                <td><a href="/admin/orders/id={{this.BookID}}"><button>Chi tiết</button></a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example" class="display-pages">
+        <ul class="pagination" id="pages">
+            <li></li>
+        </ul>
+    </nav>
+</div>
+<script>
+    (function () {
+        const pages = {{ numbersOfPages }};
+        const path =window.location.href.substring(window.location.href.indexOf('type'));
+        let href = window.location.pathname;
+        console.log(href);
+        href += "?page=";
+        
+        for (let i = 1; i <= pages; i++) {
+            const ul = document.getElementById('pages');
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.appendChild(document.createTextNode(i));
+            a.setAttribute("class", "page-link");
+            if(i===1)
+            {
+                a.setAttribute("href", window.location.pathname + '?' + path);
+
+            }
+            else 
+            {
+                a.setAttribute("href", href + i.toString()+ '&' +  path);
+            }
+            li.appendChild(a);
+            li.setAttribute("class", "page-item");
+            ul.appendChild(li);
+        }
+    }) ();
+
+</script>

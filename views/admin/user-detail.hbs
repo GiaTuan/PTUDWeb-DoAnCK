@@ -1,0 +1,59 @@
+{{>nav}}
+<div class="form-container">
+    <br>
+    <h2 class="favorite-book-align">THÔNG TIN TÀI KHOẢN</h2><br>
+    <div class="container">
+        {{#with danhsach.rows.[0]}}
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Tên tài khoản:</label>
+                <h6 type="text" class="input-checkout-form">{{this.account}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Họ tên:</label>
+                <h6 type="text" class="input-checkout-form">{{this.name}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-email" class="label-checkout">Email:</label>
+                <h6 type="text" class="input-checkout-form">{{this.email}}</h6>
+
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-phone" class="label-checkout">Số điện thoại:</label>
+                <h6 type="text" class="input-checkout-form">{{this.phone}}</h6>
+
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Địa chỉ:</label>
+                <h6 type="text" class="input-checkout-form">{{this.address}}</h6>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Trạng thái tài khoản:</label>
+                <h6 type="text" class="input-checkout-form">{{this.state}}</h6>
+            </div>
+        </div>
+        {{/with}}
+    </div>
+    <p class="announce favorite-book-align" >{{announce}}</p>
+
+    <br>
+    <form method="post">
+        {{#if isActive}}
+        <input type="submit" name="activation" value="Khóa tài khoản" class="center-submit submit-decoration">
+        {{else}}
+        <input type="submit" name="activation" value="Mở khóa tài khoản" class="center-submit submit-decoration">
+        {{/if}}
+    </form>
+    <br>
+</div>
+<br>

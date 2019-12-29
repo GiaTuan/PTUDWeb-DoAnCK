@@ -1,29 +1,51 @@
 {{>nav}}
 <h3>Danh sách người dùng</h3>
+<div class="history-order">
     <table class="table">
         <thead>
             <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tài khoản</th>
-            <th scope="col">Họ tên</th>
-            <th scope="col">Email</th>
-            <th scope="col">Địa chỉ</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Thay đổi</th>
+                <th scope="col">Họ tên</th>
+                <th scope="col">Email</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">#</th>
             </tr>
         </thead>
         <tbody>
             {{#each user.rows}}
             <tr>
-            <th scope="row">1</th>
-            <td>{{this.account}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.email}}</td>
-            <td>{{this.address}}</td>
-            <td>{{this.phone}}</td>
-            <td><button id="{{this.account}}">Thay đổi</button></td>
-
+                <td scope="row">{{this.name}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.phone}}</td>
+                <td>{{this.state}}</td>
+                <td><a href="/admin/user-manage/id={{this.account}}"><button>Chi tiết</button></a></td>
             </tr>
             {{/each}}
         </tbody>
     </table>
+    <nav aria-label="Page navigation example" class="display-pages">
+        <ul class="pagination" id="pages">
+            <li></li>
+        </ul>
+    </nav>
+</div>
+<script>
+    (function () {
+        const pages = {{ numbersOfPages }};
+        let href = window.location.pathname;
+        console.log(href);
+        href += "?page=";
+        for (let i = 1; i <= pages; i++) {
+            const ul = document.getElementById('pages');
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.appendChild(document.createTextNode(i));
+            a.setAttribute("class", "page-link");
+            a.setAttribute("href", href + i.toString());
+            li.appendChild(a);
+            li.setAttribute("class", "page-item");
+            ul.appendChild(li);
+        }
+    }) ();
+
+</script>

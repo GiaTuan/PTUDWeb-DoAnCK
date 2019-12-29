@@ -69,6 +69,9 @@
                     </div>
                     <div class="col">
                         <h4 class="book-name-cart">${item.name}</h4>
+                        <p class="display-inline">Mã sản phẩm: </p>
+                        <p class="display-inline book-id-cart">${item.id}</p>
+                        <p class="display-inline"> | </p>
                         <a href="#" class="delete-item">Xóa</a>
                     </div>
                     <div class="col">
@@ -88,7 +91,8 @@
         const deleteItems= document.querySelectorAll('.delete-item');
         deleteItems.forEach(function(item){
             item.addEventListener("click",function(event){
-                const key = event.target.previousElementSibling.textContent;
+                const key = event.target.previousElementSibling.previousElementSibling.textContent;
+                console.log(key);
                 localStorage.removeItem(key);
                 event.target.parentElement.parentElement.remove();
                 const total = getTotal();
@@ -103,7 +107,7 @@
         deleteItems.forEach(function(item){
             item.addEventListener("change",function(event){
                 const qty = event.target.value;
-                const key = event.target.parentElement.previousElementSibling.querySelector('.book-name-cart').textContent;
+                const key = event.target.parentElement.previousElementSibling.querySelector('.book-id-cart').textContent;
                 const item = JSON.parse(localStorage.getItem(key));
                 item.qty = qty;
                 localStorage.setItem(key,JSON.stringify(item));

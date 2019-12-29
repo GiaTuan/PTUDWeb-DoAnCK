@@ -8,10 +8,12 @@ module.exports.getByID = function(id,req,res,next){
           const result = await client.query('SELECT * FROM "Books"  WHERE "BookID"=' + '\'' + id +'\'');
           const comments = await client.query('SELECT * FROM "Comment" WHERE "ID"=' + '\'' + id +'\'' );
           const numberOfCmts = comments.rows.length;
-          const numberOfCmtsPerPage = 1;
+          const numberOfCmtsPerPage = 2;
+          const numberOfPages = parseInt(numberOfCmts/numberOfCmtsPerPage)+(numberOfCmts%numberOfCmtsPerPage === 0 ? 0 : 1);
           const page = req.query.page;
+          console.log(numberOfPages);
           const result2 = await client.query('SELECT * FROM "Comment"  WHERE "ID"=' + '\'' + id +'\'' +'LIMIT ' +numberOfCmtsPerPage.toString() + ' OFFSET ' + ((page-1)*numberOfCmtsPerPage).toString());
-          res.render('user/product',{danhsach: result, username: req.user,binhluan: result2, numberOfCmts, isLogin: req.isAuthenticated()});
+          res.render('user/product',{danhsach: result, username: req.user,binhluan: result2, numberOfPages, isLogin: req.isAuthenticated()});
         } finally {
           client.release()
         }

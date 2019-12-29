@@ -1,58 +1,104 @@
-<div class="checkout-form">
-    <form name="checkout-form" method="post">
-        <br>
-        <h2 class="favorite-book-align">ĐIỀN THÔNG TIN GIAO HÀNG</h2><br>
-        {{#with user.rows.[0]}}
-        <div class="container">
-            <div class="row row-margin">
-                <div class="checkout-element">
-                    <label for="customer-name" class="label-checkout">Họ tên:</label>
-                    <input type="text" name="name" id="customer-name" class="input-checkout-form"
-                        placeholder="Điền họ tên" value="{{this.name}}" required>
+<div class="container">
+    <div class="row">
+        <div class="col-8 checkout-form">
+            <form name="checkout-form" method="post">
+                <br>
+                <h2 class="favorite-book-align">ĐIỀN THÔNG TIN GIAO HÀNG</h2><br>
+                {{#with user.rows.[0]}}
+                <div class="container">
+                    <div class="row row-margin">
+                        <div class="checkout-element">
+                            <label for="customer-name" class="label-checkout">Họ tên:</label>
+                            <input type="text" name="name" id="customer-name" class="input-checkout-form"
+                                placeholder="Điền họ tên" value="{{this.name}}" required>
+                        </div>
+                    </div>
+                    <div class="row row-margin">
+                        <div class="checkout-element">
+                            <label for="customer-addr" class="label-checkout">Địa chỉ:</label>
+                            <input type="text" name="addr" id="customer-addr" class="input-checkout-form"
+                                value="{{this.address}}" placeholder="Điền địa chỉ" required>
+                        </div>
+                    </div>
+                    <div class="row row-margin">
+                        <div class="checkout-element">
+                            <label for="customer-phone" class="label-checkout">Số điện thoại:</label>
+                            <input type="text" name="phone" id="customer-phone" class="input-checkout-form"
+                                value="{{this.phone}}" placeholder="Điền số điện thoại" required>
+                        </div>
+                    </div>
+                    <div class="row row-margin">
+                        <div class="checkout-element">
+                            <label for="customer-payment" class="label-checkout">Phương thức thanh toán:</label>
+                            <select id="customer-payment" class="input-checkout-form" name="payment" required>
+                                <option value="cod">Thanh toán khi nhận hàng</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row row-margin">
-                <div class="checkout-element">
-                    <label for="customer-addr" class="label-checkout">Địa chỉ:</label>
-                    <input type="text" name="addr" id="customer-addr" class="input-checkout-form"
-                    value="{{this.address}}" placeholder="Điền địa chỉ" required>
+                {{/with}}
+                <div>
+                    <input type="submit" name="submitCheckout" value="Hoàn tất mua hàng"
+                        class="center-submit submit-decoration" id="checkout-submit">
                 </div>
-            </div>
-            <div class="row row-margin">
-                <div class="checkout-element">
-                    <label for="customer-phone" class="label-checkout">Số điện thoại:</label>
-                    <input type="text" name="phone" id="customer-phone" class="input-checkout-form"
-                     value="{{this.phone}}"   placeholder="Điền số điện thoại" required>
-                </div>
-            </div>
-            <div class="row row-margin">
-                <div class="checkout-element">
-                    <label for="customer-payment" class="label-checkout">Phương thức thanh toán:</label>
-                    <select id="customer-payment" class="input-checkout-form" name="payment" required>
-                        <option value="cod">Thanh toán khi nhận hàng</option>
-                    </select>
-                </div>
-            </div>
+                <br>
+            </form>
         </div>
-        {{/with}}
-        <div>
-            <input type="submit" name="submitCheckout" value="Tiếp theo" class="center-submit submit-decoration" id="checkout-submit">
+        <div class="col checkout-cart">
+            <br>
+            <h2 class="favorite-book-align checkout-cart-title">GIỎ HÀNG</h2><br>
+            <div class="container" id="checkout-cart-id">
+            </div>
+            <br>
+            <div>
+                <h3>Tổng tiền: <span class=" price-style" id="total">1000</span></h3>
+            </div>
+
         </div>
-        <br>
-    </form>
+    </div>
 </div>
 <br>
 <br>
 
 <script>
-   
-    function submitCheckout(e){
+    (function () {
+        const checkoutCart = document.getElementById('checkout-cart-id');
+        checkoutCart.innerHTML = "";
+        const keys = Object.keys(localStorage);
+        const length = keys.length
 
+        let total = 0;
+
+        for (let i = 0; i < length; i++) {
+            //lấy sản phẩm tử localStorage
+            const item = JSON.parse(localStorage.getItem(keys[i]));
+
+            //tính tổng tiền
+            total += item.price * parseInt(item.qty);
+
+            //tạo sản phẩm trong giỏ hàng
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('row', 'checkout-item')
+            cartItem.innerHTML =
+                `<div class="col checkout-img-container">
+                        <img src="/images/${item.img}" class="checkout-cart-img">
+                    </div>
+                    <div class="col">
+                        <p class="book-name-cart">${item.name}</p>
+                    </div>
+                    <div class="col">
+                        <p class="price display-inline">${item.price} x ${item.qty}</p>
+                    </div>`;
+            checkoutCart.appendChild(cartItem);
+        }
+        document.getElementById('total').innerHTML = total + " đ";
+
+    })();
+    function submitCheckout(e) {
         const keys = Object.keys(localStorage);
         const length = keys.length
         let items = [];
-        for(let i = 0 ; i< length ; i++)
-        {
+        for (let i = 0; i < length; i++) {
             const item = JSON.parse(localStorage.getItem(keys[i]));
             items.push(item);
         }
@@ -60,6 +106,7 @@
         xhttp.open("POST", "/checkout/order", true);
         xhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
         xhttp.send(JSON.stringify(items));
+        localStorage.clear();
     }
     document.getElementById('checkout-submit').onclick = submitCheckout;
 </script>

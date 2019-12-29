@@ -1,25 +1,19 @@
 var pool= require('../../connection.js');
 
-module.exports.getShop = function(req, res, next) {
-
-    ;(async () => {
+module.exports.getShop =async (search,page,sort,numbersOfBooksPerPage) => {
         const client = await pool.connect();
         try {
             let where = "";
-            const search = req.query.search;
-            const page = req.query.page;
-            const sort = req.query.sort;
-
             if(search !== undefined)
             {
                 where = "WHERE \"BookName\" LIKE " + '\'%' + search + '%\'';
             }
-  
+
             const result = await client.query("SELECT * FROM \"Books\" " + where);
-   
-            const numbersOfBooksPerPage = 6;
+
             const numbersOfBooks = result.rows.length;
             const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
+        
 
             let queryString;
 
@@ -35,26 +29,20 @@ module.exports.getShop = function(req, res, next) {
             {
                 queryString= 'SELECT * FROM "Books" ' + where + ' ORDER BY "BookName" ASC '+'LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString();
             }
-  
             const result2 = await client.query(queryString);
-            res.render('user/shop',{danhsach: result2 , username: req.user , numbersOfPages ,isLogin: req.isAuthenticated()});
-        } finally {
-            client.release()
+            await client.release();
+            return [result2,numbersOfPages];
+        } 
+        catch(err)
+        {
+            console.log("Loi neeeeeeeeeeeeeeeeeeeeeee");
+            console.log(err);
         }
-      })().catch(err => next(err))
 }
 
-module.exports.getFind = function(req,res,next){
-
-
-    ;(async () => {
+module.exports.getFind = async (search,gia,theloai,lang,page,sort,numbersOfBooksPerPage)=>{
         const client = await pool.connect();
         try {
-            let search = req.query.search;
-            let gia = req.query.gia;
-            let theloai = req.query.theloai;
-            let lang = req.query.lang;
-            
             gia = getGia(gia);
             theloai= getTheLoai(theloai);
             lang = getLang(lang);    
@@ -90,11 +78,8 @@ module.exports.getFind = function(req,res,next){
             {
                 where += "AND \"BookName\" LIKE " + '\'%' + search + '%\'';
             }
-            const result = await client.query('SELECT * FROM "Books" ' +where);
-   
-            const page = req.query.page;
-            const sort = req.query.sort;
-            const numbersOfBooksPerPage = 6;
+            const result = await client.query('SELECT * FROM "Books" ' +where);       
+
             const numbersOfBooks = result.rows.length;
             const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
   
@@ -113,11 +98,13 @@ module.exports.getFind = function(req,res,next){
             }
   
             const result2 = await client.query(queryString);
-            res.render('user/shop',{danhsach: result2 , username: req.user , numbersOfPages ,isLogin: req.isAuthenticated()});
-        } finally {
             client.release()
+            return [result2,numbersOfPages];
         }
-      })().catch(err => next(err))
+        catch(err)
+        {
+            console.log(err);
+        }
 }
 
 function getGia(gia)
@@ -141,16 +128,15 @@ function getTheLoai(theloai)
     }
     else if(theloai === 'tutruyen')
     {
-        theloai = 'Tự truyện';
+        theloai = 'Tự truyện';
     }
     else if(theloai === 'vanhoc')
     {
-        theloai = 'Văn học';
+        theloai = 'Văn học';
     }
     return theloai;
 
 }
-
 function getLang(lang)
 {
     if(lang === 'tiengviet')
