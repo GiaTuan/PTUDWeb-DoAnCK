@@ -1,171 +1,126 @@
-var pool=require('../../connection.js');
-const passport = require('../../passport');
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
-module.exports.getLogIn = function(req,res,next){
-    res.render('user/login');
+const pool=require('../../connection.js');
+
+module.exports.getUserFromEmail = async (email) =>{
+    const client = await pool.connect();
+    try {
+        const result = await client.query('SELECT * FROM "Users"  WHERE "email"='+ '\'' + email +'\'');
+        await client.release();
+        return result;
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
 }
 
-module.exports.submitLogIn = function(req,res,next){
-    const email = req.body.fpemail;
-    if(email !== undefined)
-    {   
+module.exports.getStateOfUser =  (account) =>{
+    return new Promise((resolve,reject)=>{
         ;(async () => {
             const client = await pool.connect();
             try {
-                const result = await client.query('SELECT * FROM "Users"  WHERE "email"='+ '\'' + email +'\'');
-               
-                if(result.rows.length > 0)
-                {
-                    let tempPass = result.rows[0].account+"_PTUDWK17";
-
-                    bcrypt.genSalt(10, function(err, salt) {
-                        bcrypt.hash(tempPass, salt, function(err, hash) {
-                            client.query('UPDATE "Users" SET "password"='+' \''+ hash + '\''  + 'WHERE "email"='+ '\'' + email +'\'',function(err,result2){
-                                if(err)
-                                {
-                                   return console.log(err);
-                                }
-                            });
-                        });
-                    });
-
-                    var transporter = nodemailer.createTransport({
-                    service: 'gmail',
-                    auth: {
-                    user: 'ptudweb123@gmail.com',
-                    pass: 'Doanweb123456'
-                    }
-                    });
-                
-                    var mailOptions = {
-                    from: 'ptudweb123@gmail.com',
-                    to: email,
-                    subject: 'Lấy lại mật khẩu tài khoản',
-                    text: 'Mật khẩu tạm thời của bạn: ' + tempPass + '\n HÃY ĐỔI LẠI MẬT KHẨU KHI ĐĂNG NHẬP TÀI KHOẢN'
-                    };
-                
-                    transporter.sendMail(mailOptions, function(error, info){
-                    if (error) 
-                    {
-                        console.log(error);
-                    } 
-                    else 
-                    {
-                        console.log('Email sent: ' + info.response);
-                        res.redirect('login');
-                    }
-                    });
-                }
-                else
-                {
-                    res.render('user/login',{announce: 'Email vừa nhập chưa được đăng ký tài khoản'});      
-                }
+                const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + account +'\'');
+                resolve(result.rows[0].state); 
             } finally {
-              client.release()
+            client.release()
             }
-        })().catch(err => next(err))
-        
-    }
-    else
-    {
-        passport.authenticate('user-local', function(err, user, info) {
-            if (err) 
-            {
-                return next(err); 
-            }
-            if (!user) 
-            { 
-                return res.render('user/login',{announce: 'Tài khoản hoặc mật khẩu không chính xác'}); 
-            }
-            req.logIn(user, function(err) 
-            {
-                if (err) 
-                { 
-                    return next(err); 
+        })().catch(err => console.log(err)); 
+    });
+}
+
+module.exports.sendToEmail = async (email)=>{
+    const client = await pool.connect();
+    let tempPass =  "PTUDWK17_" + Math.floor(100000 + Math.random() * 900000)
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(tempPass, salt, function(err, hash) {
+            client.query('UPDATE "Users" SET "password"='+' \''+ hash + '\''  + 'WHERE "email"='+ '\'' + email +'\'',function(err,result2){
+                if(err)
+                {
+                    return console.log(err);
                 }
                 else
                 {
-                    ;(async () => {
-                        const client = await pool.connect();
-                        try {
-                            const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user.rows[0].account +'\'');
-                            console.log(req.user.rows[0].account);
-                            if(result.rows[0].state === "khóa")
-                            {
-                                return res.render('user/login',{announce: 'Tài khoản đã bị khóa'}); 
-                            }
-                            else
-                            {
-                                res.redirect('/');
-                            }        
-                        } finally {
-                        client.release()
-                        }
-                    })().catch(err => next(err))
+                    client.release();
                 }
             });
-        })(req, res, next);
+        });
+    });
+    var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+    user: 'ptudweb123@gmail.com',
+    pass: 'Doanweb123456'
     }
+    });
+
+    var mailOptions = {
+    from: 'ptudweb123@gmail.com',
+    to: email,
+    subject: 'Lấy lại mật khẩu tài khoản',
+    text: 'Mật khẩu tạm thời của bạn: ' + tempPass + '\n HÃY ĐỔI LẠI MẬT KHẨU KHI ĐĂNG NHẬP TÀI KHOẢN'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+    if (error) 
+    {
+        console.log(error);
+    } 
+    else 
+    {
+        console.log('Email sent: ' + info.response);
+    }
+    });
+    return 1;
 }
 
-module.exports.getUserInfo =  function(req,res,next){
 
-    ;(async () => {
+module.exports.getUserInfo =  async (user) => {
         const client = await pool.connect();
-        try {
-            const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user +'\'');
-            if(req.isAuthenticated())
-            {
-                res.render('user/info',{user: result , username: req.user , isLogin: true});
-            }
-            else
-            {
-                res.redirect('/login');
-            }        
-        } finally {
-          client.release()
+        try 
+        {
+            const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + user +'\'');
+            await client.release();
+            return result; 
+        } 
+        catch(err)
+        {
+            console.log(err);
         }
-    })().catch(err => next(err))
 }
 
-module.exports.updateInfo = (req,res,next) => {
-    ;(async () => {
-        const client = await pool.connect();
-        try {
-            const name = req.body.name;
-            const email =req.body.email;
-            const phone = req.body.phone;
-            const addr= req.body.addr;
+module.exports.updateInfo =async (user,name,email,phone,addr) => {
+    const client = await pool.connect();
+    try {
+        const nguoidung = await client.query('SELECT * FROM "Users" WHERE "account"='+ '\'' + user +'\'');
+        let check = 1;
+        if(email !== nguoidung.rows[0].email)
+        {
             const checkEmail = await client.query('SELECT * FROM "Users"  WHERE "email"='+ '\'' + email +'\'');
             if(checkEmail.rows.length > 0)
             {
-                const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user +'\'');
-                res.render('user/info',{user: result,announce: 'Email đã tồn tại' , username: req.user , isLogin: true});       
+                check = -1;
             }
-            else
-            {
-                await client.query("UPDATE \"Users\" SET \"name\" ='" + name + '\',"email"=\''+ email + '\',"address"=\''+ addr + '\',"phone"=\''+ phone + '\' WHERE "account"=' + '\'' + req.user +'\'');      
-                const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.user +'\'');
-                res.render('user/info',{user: result,announce: 'Cập nhật thông tin tài khoản thành công' , username: req.user , isLogin: true});
-            }
-            
-        } finally {
-          client.release()
         }
-    })().catch(err => next(err))
-}
-
-
-module.exports.changePassword = function(req,res,next){
-    if(req.isAuthenticated())
+        if(check === -1)
+        {
+            const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + user +'\'');
+            client.release();
+            return [-1,result];
+        }
+        else
+        {
+            await client.query("UPDATE \"Users\" SET \"name\" ='" + name + '\',"email"=\''+ email + '\',"address"=\''+ addr + '\',"phone"=\''+ phone + '\' WHERE "account"=' + '\'' + user +'\'');      
+            const result = await client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + user +'\'');
+            client.release();
+            return [1,result];
+        }
+        
+    } 
+    catch(err)
     {
-        res.render('user/change-pw',{username: req.user,isLogin: req.isAuthenticated()});
+        console.log(err);
     }
-    else
-    {
-        res.redirect('/');
-    }  
 }
 
 module.exports.submitChangePassword = function(req,res,next)
@@ -210,24 +165,15 @@ module.exports.submitChangePassword = function(req,res,next)
    
 }
 
-module.exports.getOrders = function(req,res,next)
-{
-    const user = req.user;
-    if(req.isAuthenticated())
-    {
-        ;(async () => {
-            const client = await pool.connect();
-            try {
-                const result = await client.query('SELECT * FROM "Order"  WHERE "username"='+ '\'' + user +'\'');
-                res.render('user/order-history',{danhsach: result, username: req.user , isLogin: true});
-
-            } finally {
-              client.release()
-            }
-        })().catch(err => next(err))
+module.exports.getOrders = async (user)=>{
+    const client = await pool.connect();
+    try {
+        const result = await client.query('SELECT * FROM "Order"  WHERE "username"='+ '\'' + user +'\'');
+        await client.release();
+        return result;
     }
-    else
+    catch(err)
     {
-        res.redirect('/logup');
-    }  
+        console.log(err);
+    }
 }

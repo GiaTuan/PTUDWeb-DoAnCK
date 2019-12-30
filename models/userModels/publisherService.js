@@ -1,13 +1,8 @@
 var pool = require('../../connection.js');
 
-module.exports.getPublisher = function(req, res, next) {
-    ;(async () => {
+module.exports.getPublisher = async (publisher,search,page,sort,numbersOfBooksPerPage) => {
       const client = await pool.connect();
       try {
-          let publisher = req.params.id;
-          const search = req.query.search;
-          const page = req.query.page;
-          const sort = req.query.sort;
 
           publisher = getPublisherName(publisher);
           
@@ -19,7 +14,6 @@ module.exports.getPublisher = function(req, res, next) {
           
           const result = await client.query('SELECT * FROM "Books" ' + where );
 
-          const numbersOfBooksPerPage = 6;
           const numbersOfBooks = result.rows.length;
           const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
           
@@ -38,11 +32,13 @@ module.exports.getPublisher = function(req, res, next) {
           }
 
           const result2 = await client.query(queryString);
-          res.render('user/shop',{danhsach: result2 , username: req.user,numbersOfPages,isLogin: req.isAuthenticated()});
-      } finally {
-          client.release()
+          await client.release();
+          return [result2,numbersOfPages];
+      } 
+      catch(err)
+      {
+        console.log(err);
       }
-    })().catch(err => next(err))
 }
 
 function getPublisherName(publisher)

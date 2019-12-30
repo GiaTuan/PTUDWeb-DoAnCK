@@ -1,13 +1,7 @@
 const pool = require('../../connection');
-module.exports.getType= function(req, res, next) {
-  ;(async () => {
+module.exports.getType= async (type,search,page,sort,numbersOfBooksPerPage) =>{
     const client = await pool.connect();
     try {
-        let type = req.params.id
-        const search = req.query.search;
-        const page = req.query.page;
-        const sort = req.query.sort;
-
         type = getTypeName(type);
         let where = "WHERE \"Type\"= '"+ type + '\'' ;
         
@@ -18,7 +12,7 @@ module.exports.getType= function(req, res, next) {
         
         const result = await client.query('SELECT * FROM "Books" ' + where );
 
-        const numbersOfBooksPerPage = 6;
+      
         const numbersOfBooks = result.rows.length;
         const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
         
@@ -37,11 +31,14 @@ module.exports.getType= function(req, res, next) {
         }
 
         const result2 = await client.query(queryString);
-        res.render('user/shop',{danhsach: result2 , username: req.user,numbersOfPages,isLogin: req.isAuthenticated()});
-    } finally {
-        client.release()
-    }
-  })().catch(err => next(err))
+        await client.release();
+        return [result2,numbersOfPages];
+
+      }
+      catch(err)
+      {
+        console.log(err);
+      }
 }
 
 function getTypeName(type)

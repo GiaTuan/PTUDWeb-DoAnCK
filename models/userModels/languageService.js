@@ -1,15 +1,9 @@
 var pool = require('../../connection.js');
-module.exports.getLanguage = function(req, res, next) {
+module.exports.getLanguage = async (id,search,page,sort,numbersOfBooksPerPage) => {
 
-
-
-    ;(async () => {
         const client = await pool.connect();
         try {
-            const id = req.params.id;
-            const search = req.query.search;
-            const page = req.query.page;
-            const sort = req.query.sort;
+           
             let where = "WHERE \"BookLanguage\"= '"+ id + '\'' ;
 
             if(search !== undefined)
@@ -19,7 +13,6 @@ module.exports.getLanguage = function(req, res, next) {
 
             const result = await client.query('SELECT * FROM "Books" ' + where  );
           
-            const numbersOfBooksPerPage = 6;
             const numbersOfBooks = result.rows.length;
             const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
             
@@ -38,9 +31,11 @@ module.exports.getLanguage = function(req, res, next) {
             }
           
             const result2 = await client.query(queryString);
-            res.render('user/shop',{danhsach: result2 , username: req.user,numbersOfPages,isLogin: req.isAuthenticated()});
-          } finally {
-            client.release()
+            await client.release();
+            return [result2,numbersOfPages];
+          }
+        catch(err)
+        {
+          console.log(err);
         }
-    })().catch(err => next(err))
 }

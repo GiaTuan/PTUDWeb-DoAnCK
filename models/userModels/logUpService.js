@@ -2,10 +2,6 @@ const pool = require('../../connection');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
-module.exports.getLogUp = function(req, res, next) {
-    res.render('user/logup');
-}
-
 module.exports.getLogUpComplete = function(req,res,next){
     pool.connect(function(err, client, done){  
         client.query('SELECT * FROM "Users"  WHERE "account"='+ '\'' + req.body.username +'\' OR' + '"email"='+ '\'' + req.body.email + '\'' , function (err, result) {
