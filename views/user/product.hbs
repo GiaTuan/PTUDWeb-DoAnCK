@@ -1,8 +1,8 @@
-{{#with danhsach.rows.[0]}}
 <div class="container product-container">
     <div class="row">
+        {{#with danhsach.rows.[0]}}
         <div class="col">
-            <img src="/images/{{this.bookimg}}" alt="#" id="book-img">
+            <img src="{{this.bookimg}}" alt="#" id="book-img">
         </div>
         <div class="col">
             <br>
@@ -29,11 +29,32 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        {{/with}}
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <h2>CÁC SÁCH THƯỜNG ĐƯỢC MUA CÙNG</h2>
+    </div>
+    <div class="row">
+            {{#each danhsach2.rows}}
+            <div class="col-lg-3 col-md-6">
+                <div class="item">
+                    <a href="/shop/product/id={{this.BookID}}?page=1"><img src="{{this.bookimg}}"
+                            alt="{{this.BookID}}-img"></a>
+                    <a href="/shop/product/id={{this.BookID}}?page=1">
+                        <h3 class="favorite-book-align">{{this.BookName}}</h3>
+                    </a>
+                    <p class="favorite-book-align"><strong>{{this.Author}}</strong></p>
+                    <h6 class="favorite-book-align price-style"><span class="price price-style">{{this.Price}}đ</span> / <a
+                            href="/shop/product/id={{this.BookID}}?page=1">Mua ngay</a></h6>
+                </div>
+            </div>
+            {{/each}}
+        </div>
 </div>
-{{/with}}
+
 {{>comments}}
 
 <script>
@@ -53,7 +74,12 @@
         const name= document.getElementById('book-name').textContent;
         const price= parseFloat(document.getElementById('book-price').textContent);
         const qty= parseInt(document.getElementById('quantity').value);
-        img = img.slice(img.indexOf("images")+7);
+        const index = img.indexOf("/images");
+        if(index !== -1)
+        {
+            img = img.slice(index);
+        }
+
         item = {id,name,img,price,qty};
         localStorage.setItem(id,JSON.stringify(item));
         }

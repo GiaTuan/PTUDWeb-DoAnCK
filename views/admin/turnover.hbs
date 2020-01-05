@@ -1,0 +1,21 @@
+{{>nav}}
+<form class="form-container" >
+    <div class="checkout-inf">
+        <p class="display-inline" ><strong>Chọn ngày: </strong></p>
+        <input type="date" name="date">
+        <input type="submit" value="Xem doanh số">
+        <div>
+            <p class="display-inline" ><strong>Số lượng sản phẩm đã bán:</strong></p>
+            {{#with danhsach.rows.[0]}}
+            <p class="display-inline">{{this.sl}}</p>
+            {{/with}}
+        </div>
+         <div>
+
+            <p class="display-inline" ><strong>Doanh thu:</strong></p>
+            {{#with danhsach.rows.[0]}}
+            <p class="display-inline">{{this.dt}} đ</p>
+            {{/with}}
+        </div>
+    </div>
+</form>

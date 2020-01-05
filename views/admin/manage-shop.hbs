@@ -4,23 +4,30 @@
         <label for="type">Thể loại</label>
         <select name="type" id="type">
             <option value="">Bỏ chọn</option>
+            <option value="Tiểu thuyết">Tiểu thuyết</option>
+            <option value="Tự truyện">Tự truyện</option>
             <option value="Văn học">Văn học</option>
-            <option value="tieuthuyet">Tiểu thuyết</option>
-            <option value="tutruyen">Tự truyện</option>
         </select>
         <label for="lang">Ngôn ngữ</label>
         <select name="lang" id="lang">
             <option value="">Bỏ chọn</option>
-            <option value="tiengviet">Tiếng Việt</option>
-            <option value="ngoaingu">Ngoại ngữ</option>
+            <option value="Vietnamese">Tiếng Việt</option>
+            <option value="Foreign">Ngoại ngữ</option>
         </select>
-        <label for="publisher">Nhà xuất bản</label>
+        <label for="publisher">Nhà xuất bản:</label>
         <select name="publisher" id="publisher">
             <option value="">Bỏ chọn</option>
-            <option value="NXB-NhaNam">Nhã Nam</option>
+            <option value="Nhà Xuất Bản Hội Nhà Văn">Hội Nhà Văn</option>
+            <option value="Nhà Xuất Bản Lao Động">Lao Động</option>
+            <option value="Nhà Xuất Bản Tổng hợp TP.HCM">Tổng hợp TP. HCM</option>
+            <option value="Nhà Xuất Bản Thế Giới">Thế Giới</option>
+            <option value="Nhà Xuất Bản Trẻ">Trẻ</option>
+            <option value="Nhà Xuất Bản Tri Thức">Tri Thức</option>
+            <option value="Nhã Nam">Nhã Nam</option>
         </select>
         <input type="submit">
     </form>
+    <a href="/admin/manage-shop/add-book"><button>Thêm sách</button></a>
 </div>
 <br>
 <div class=" history-order">
@@ -31,6 +38,7 @@
                 <th scope="col">Tác giả</th>
                 <th scope="col">Thể loại</th>
                 <th scope="col">Ngôn ngữ</th>
+                <th scope="col">NXB</th>
                 <th scope="col">#</th>
             </tr>
         </thead>
@@ -41,6 +49,7 @@
                 <td>{{this.Author}}</td>
                 <td>{{this.Type}}</td>
                 <td>{{this.BookLanguage}}</td>
+                <td>{{this.Publisher}}</td>
                 <td><a href="/admin/manage-shop/id={{this.BookID}}"><button>Chi tiết</button></a></td>
             </tr>
             {{/each}}

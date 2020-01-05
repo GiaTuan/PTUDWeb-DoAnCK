@@ -32,4 +32,19 @@ router.get('/orders/id=:id',adminControllers.getOrderDetail)
 router.post('/orders/id=:id',adminControllers.changeOrderState)
 
 router.get('/manage-shop',adminControllers.manageShop)
+
+router.get('/manage-shop/id=:id',adminControllers.getBookDetail)
+
+router.post('/manage-shop/id=:id',adminControllers.changeBookDetail)
+
+
+router.get('/manage-shop/add-book',adminControllers.addBook)
+
+router.post('/manage-shop/add-book',adminControllers.submitBook)
+
+router.get('/statistic',adminControllers.getTop10)
+
+router.get('/turnover',adminControllers.getTurnover)
+
+
 module.exports = router;

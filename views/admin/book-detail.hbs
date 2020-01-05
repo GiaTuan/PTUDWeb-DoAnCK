@@ -1,0 +1,64 @@
+{{>nav}}
+<form class="form-container" method="POST">
+    <br>
+    <h2 class="favorite-book-align">THÔNG TIN SÁCH</h2><br>
+    <div class="container">
+        {{#with danhsach.rows.[0]}}
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Tên sách:</label>
+                <input name="name" type="text" class="input-checkout-form" value="{{this.BookName}}">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-name" class="label-checkout">Tác giả:</label>
+                <input name="author" type="text" class="input-checkout-form" value="{{this.Author}}">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-phone" class="label-checkout">Thể loại:</label>
+                <input name="type" type="text" class="input-checkout-form" value="{{this.Type}}">
+
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Giá:</label>
+                <input name="price" type="text" class="input-checkout-form" value="{{this.Price}}">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label class="label-checkout">NXB:</label>
+                <input name="publisher" type="text" class="input-checkout-form" value="{{this.Publisher}}">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Giới thiệu:</label>
+                <textarea name="description"  class="input-checkout-form" >{{this.Description}}</textarea> 
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="customer-addr" class="label-checkout">Ngôn ngữ:</label>
+                <input name="lang" type="text" class="input-checkout-form" value="{{this.BookLanguage}}">
+            </div>
+        </div>
+        {{/with}}
+    </div>
+    <p class="announce favorite-book-align" >{{announce}}</p>
+    {{#if deletebook}}
+    {{else}}
+    <div>
+        <input type="submit" name="delete" value="Xóa sách" class="center-submit submit-decoration">
+        <br>
+        <input type="submit"  class="center-submit submit-decoration">
+    </div>
+    {{/if}}
+    <br>
+</form>
+
+<br>

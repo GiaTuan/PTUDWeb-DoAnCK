@@ -1,6 +1,6 @@
 
 <div class="comment-container">
-    <h1 class="comment-title">ĐÁNH GIÁ SẢN PHẨM</h1>
+    <h2 class="comment-title">ĐÁNH GIÁ SẢN PHẨM</h2>
     <p>Thêm đánh giá</p>
     <form name="add-comment-form" method="POST">
         <br>
@@ -30,16 +30,22 @@
         <br>
     </form>
     <div class="container">
-        {{#each binhluan.rows}}
-        <div class="row comment-element">
-            <div class="col-3">
-                <h5 class="username-comment">{{this.username}}</h5>
-            </div>
-            <div class="col">
-                <p>{{this.comment}}</p>
-            </div>
-        </div>
-        {{/each}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tên khách hàng</th>
+                    <th scope="col">Đánh giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each binhluan.rows}}
+                <tr>
+                    <th scope="row" class="book-name-cart">{{this.username}}</th>
+                    <td>{{this.comment}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
     <nav aria-label="Page navigation example" class="display-pages">
         <ul class="pagination" id="pages">

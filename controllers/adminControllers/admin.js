@@ -1,7 +1,6 @@
-const pool = require('../../connection')
 const passport = require('passport');
-const bcrypt = require('bcryptjs');
-const adminService = require('../../models/adminModels/adminService')
+const adminService = require('../../models/adminModels/adminService');
+
 module.exports.getAdmin = async (req,res,next)=>{
     const user = req.user;
     const isAdmin = await adminService.getAdmin(user);
@@ -197,8 +196,10 @@ module.exports.manageShop =async (req,res,next)=>{
     {
         let page = req.query.page;
         const numbersOfBooksPerPage = 5;
-        
-        const result = await adminService.manageShop(page,numbersOfBooksPerPage);
+        const publisher = req.query.publisher;
+        const type = req.query.type;
+        const lang = req.query.lang;
+        const result = await adminService.manageShop(page,publisher,type,lang,numbersOfBooksPerPage);
 
         res.render('admin/manage-shop',{layout: 'ad-layout',danhsach: result[0],numbersOfPages: result[1],adname: req.user,isAdmin: true});
     }
@@ -206,4 +207,99 @@ module.exports.manageShop =async (req,res,next)=>{
     {
         res.redirect('/admin');
     }   
+}
+
+module.exports.getBookDetail = async(req,res,next) =>{
+    const user = req.user;
+    const isAdmin = await adminService.getAdmin(user);
+
+    if(req.isAuthenticated() && isAdmin == true)
+    {
+        const id = req.params.id;
+        const result = await adminService.getBookByID(id);
+        res.render('admin/book-detail',{layout: 'ad-layout',danhsach: result,adname: req.user,isAdmin: true});
+    }
+    else
+    {
+        res.redirect('/admin');
+    }  
+}
+module.exports.changeBookDetail = async(req,res,next)=>{
+    const name = req.body.name;
+    const type = req.body.type;
+    const description = req.body.description;
+    const id = req.params.id;
+    const lang = req.body.lang;
+    const price = req.body.price;
+    const author = req.body.author;
+    const nxb = req.body.publisher;
+    const isDelete = req.body.delete;
+    let result;
+    let announce;
+    let deletebook = false;
+    if(isDelete !== undefined)
+    {
+        deletebook = true;
+        result = await adminService.deleteBookDetail(id);
+        announce = 'Xóa sách thành công';
+    }
+    else
+    {
+       result = await adminService.changeBookDetail(name,type,description,id,lang,price,author,nxb);
+       announce = 'Thay đổi thông tin thành công';
+    }
+    res.render('admin/book-detail',{layout: 'ad-layout',danhsach: result,announce: announce,deletebook:deletebook,adname: req.user,isAdmin: true});
+
+
+}
+
+module.exports.addBook = async(req,res,next) =>{
+    const user = req.user;
+    const isAdmin = await adminService.getAdmin(user);
+
+    if(req.isAuthenticated() && isAdmin == true)
+    {
+        res.render('admin/add-book',{layout: 'ad-layout',adname: user,isAdmin: true});
+    }
+    else
+    {
+        res.redirect('/admin');
+    }   
+}
+
+module.exports.submitBook = (req,res,next) =>{
+    adminService.addBook(req,res,next);
+}
+
+
+module.exports.getTop10 = async(req,res,next)=>{
+    const user = req.user;
+    const isAdmin = await adminService.getAdmin(user);
+
+    if(req.isAuthenticated() && isAdmin == true)
+    {
+        const result = await adminService.getTop10();
+        console.log(result);
+        res.render('admin/top10',{layout: 'ad-layout',danhsach: result,adname: user,isAdmin: true});
+    }
+    else
+    {
+        res.redirect('/admin');
+    }  
+}
+
+module.exports.getTurnover = async(req,res,next)=>{
+    const user = req.user;
+    const isAdmin = await adminService.getAdmin(user);
+
+    if(req.isAuthenticated() && isAdmin == true)
+    {
+        const date = req.query.date;
+        const result = await adminService.getTurnover(date);
+        res.render('admin/turnover',{layout: 'ad-layout',danhsach: result,adname: req.user,isAdmin: true});
+    }
+    else
+    {
+        res.redirect('/admin');
+    }
 }

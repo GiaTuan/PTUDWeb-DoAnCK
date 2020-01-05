@@ -1,8 +1,9 @@
-const pool = require('../../connection')
-const passport = require('passport');
 const bcrypt = require('bcryptjs');
-
-
+const fs = require("fs");
+const path = require("path");
+const formidable = require('formidable');
+const cloudinary = require('cloudinary');
+const pool = require('../../connection');
 module.exports.getAdmin = async (user)=>{
     const client = await pool.connect();
     try {
@@ -220,17 +221,59 @@ module.exports.changeOrderState = async (state,id) =>{
     }
 }
 
-module.exports.manageShop = async(page,numbersOfBooksPerPage)=>{
+module.exports.manageShop = async(page,publisher,type,lang,numbersOfBooksPerPage)=>{
     const client = await pool.connect();
     try {
         const result = await client.query('SELECT * FROM "Books" ');
-        if(page== undefined)
+        if(page == undefined)
         {
             page=1;
         }
         const numbersOfBooks = result.rows.length;
         const numbersOfPages = parseInt(numbersOfBooks/numbersOfBooksPerPage)+(numbersOfBooks%numbersOfBooksPerPage === 0 ? 0 : 1);
-        const result2 = await client.query('SELECT * FROM "Books"'+'LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString());
+
+        let where = 'WHERE';
+        let x=0;
+        console.log(publisher);
+        console.log(type);
+        console.log(lang);
+        if(publisher === undefined && type === undefined && lang === undefined)
+        {
+            console.log('1');
+            where = '';
+        }
+        else if(publisher === '' && type === '' && lang === '')
+        {
+            console.log('1');
+            where = '';
+        }
+        else
+        {
+            if(publisher !== '')
+            {
+                where += ' "Publisher"= ' + '\'' + publisher + '\'' ;
+                x++;
+            }
+            if(type !== '')
+            {
+                if(x===1)
+                {
+                    where += " AND " 
+                    x--;
+                }
+                where +=  ' "Type"= ' + '\'' + type + '\'';
+                x++;
+            }
+            if(lang !== '')
+            {
+                if(x===1)
+                {
+                    where += " AND " 
+                }
+                where +=  ' "BookLanguage"= ' + '\''+ lang + '\'';
+            }
+        }
+        const result2 = await client.query('SELECT * FROM "Books"'+ where +'LIMIT ' +numbersOfBooksPerPage.toString() + ' OFFSET ' + ((page-1)*numbersOfBooksPerPage).toString());
         client.release();
         return [result2,numbersOfPages];
     }
@@ -238,4 +281,113 @@ module.exports.manageShop = async(page,numbersOfBooksPerPage)=>{
     {
         console.log(err);
     } 
+}
+
+module.exports.getBookByID = async(id) =>{
+    const client = await pool.connect();
+    try {
+        const result = await client.query('SELECT * FROM "Books" WHERE "BookID" = \'' + id + "'");
+        client.release();
+        return result;        
+    } 
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+
+
+module.exports.changeBookDetail = async (name,type,description,id,lang,price,author,nxb)=>{
+    const client = await pool.connect();
+    try {
+        await client.query("UPDATE \"Books\" SET \"BookName\" ='" + name + '\',"Type"=\''+ type + '\',"Description"=\''+ description + '\',"BookLanguage"=\''+ lang + '\',"Price"=\''+ price+ '\',"Author"=\''+ author+ '\',"Publisher"=\''+ nxb + '\' WHERE "BookID"=' + '\'' + id +'\'');
+        const result = await client.query('SELECT * FROM "Books" WHERE "BookID" = \'' + id + "'");
+        client.release();
+        return result;        
+    } 
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+
+
+module.exports.deleteBookDetail = async(id)=>{
+    const client = await pool.connect();
+    try {
+        await client.query('DELETE FROM "Books" WHERE "BookID"=' + '\'' + id +'\'');
+        const result = await client.query('SELECT * FROM "Books" WHERE "BookID" = \'' + id + "'");
+        client.release();
+        return result;        
+    } 
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+
+module.exports.addBook = (req,res,next)=>{
+    const form = new formidable.IncomingForm();
+    cloudinary.config({ 
+        cloud_name: 'dgzsixmcn', 
+        api_key: '367882326237875', 
+        api_secret: 'Z7NSV44OJatDRS3RXrMgWwCzng0' 
+      });
+    
+    form.keepExtensions = true;
+
+    let name,author,publisher,type,description,price,lang;
+
+    form.parse(req, function(err, fields, files){
+        name = fields.name;
+        author = fields.author;
+        publisher = fields.publisher;
+        type = fields.type;
+        description = fields.description;
+        price = fields.price;
+        lang = fields.lang;
+        let imgname = Date.now() +files.img.name;
+        const oldpath = files.img.path; 
+        const newpath = path.join(__dirname,'../../public/images/' + imgname) ;
+        fs.rename(oldpath, newpath, function (err) {
+            pool.connect(function(err, client, done){  
+                cloudinary.uploader.upload(newpath,function(result){
+                    client.query('INSERT INTO "Books"("BookName","Description","Author","Publisher","Type","bookimg","BookLanguage","Price") VALUES (' + '\'' +name  + '\',\'' + description + '\',\'' + author + '\',\'' + publisher + '\',\'' + type + '\',\'' + result.url + '\',\'' + lang + '\',\'' + price + '\');', function (err, result) {
+                        done();
+                        if(err){
+                            return console.log('error running query', err);
+                        }
+                        res.render('admin/add-book',{layout: 'ad-layout',announce:'Thêm sách thành công' ,adname: req.user,isAdmin: true});
+                    });
+                });  
+            });     
+        });
+    });
+}
+
+module.exports.getTop10 = async()=>{
+    const client = await pool.connect();
+    try {
+        const result = await client.query('select "product","productname",sum(quantity) from "Order" where "state" = \'Đã thanh toán\' group by "product","productname" order by sum(quantity) DESC limit 10');
+        client.release();
+        return result;        
+    } 
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+
+
+module.exports.getTurnover = async(date)=>{
+    const client = await pool.connect();
+    try {
+        const result = await client.query('select sum(quantity) as sl,sum(total) as dt from "Order" where "state" = \'Đã thanh toán\' AND date = \'' + date + '\''); 
+        client.release();
+        return result;        
+    } 
+    catch(err)
+    {
+        console.log(err);
+    }
 }

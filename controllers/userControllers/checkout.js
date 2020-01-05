@@ -26,6 +26,8 @@ module.exports.postOrder = async (req,res,next)=>{
     }
     if(post===2)
     {
+        console.log(book);
+
         const user = req.user;
         const tenkhachhang =req.body.name;
         const diachi = req.body.addr;

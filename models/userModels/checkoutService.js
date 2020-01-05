@@ -31,9 +31,11 @@ module.exports.postOrder = async (user,tenkhachhang,diachi,sdt,payment,book) =>{
             const fullDate = mm + "/" + dd + "/" + yyyy;
             const state = "chưa thanh toán"
             const bookname = book[i].name;
-            await client.query("INSERT INTO \"Order\" VALUES ('"+user +"','" + bookid +"','" + qty +"','" + total +"','" + fullDate +"','" + state +"','" + bookname +"','" + diachi +"','" + sdt +"','" + payment +"','" + tenkhachhang +"')");     
-            await client.release();
+            console.log(total);
+            console.log("INSERT INTO \"Order\" VALUES ('"+user +"','" + bookid +"','" + qty +"','"  + fullDate +"','" + state +"','" + bookname +"','" + diachi +"','" + sdt +"','" + payment +"','" + tenkhachhang +"','" + total  +"')");
+            await client.query("INSERT INTO \"Order\" VALUES ('"+user +"','" + bookid +"','" + qty +"','"  + fullDate +"','" + state +"','" + bookname +"','" + diachi +"','" + sdt +"','" + payment +"','" + tenkhachhang +"','" + total  +"')");     
         }
+        client.release();
     }
     catch(err)
     {

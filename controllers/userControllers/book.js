@@ -5,7 +5,7 @@ module.exports.book = async (req, res, next) => {
 
     const result = await book.getByID(id,page);
 
-    res.render('user/product',{danhsach: result[0], username: req.user,binhluan: result[1], numberOfPages: result[2], isLogin: req.isAuthenticated()});
+    res.render('user/product',{danhsach: result[0], username: req.user,binhluan: result[1], numberOfPages: result[2], isLogin: req.isAuthenticated(),danhsach2: result[3]});
 
 }
 

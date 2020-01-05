@@ -46,7 +46,7 @@
             {{#each danhsach.rows}}
             <div class="col-lg-3 col-md-6">
                 <div class="item">
-                    <img src="/images/{{this.bookimg}}" alt="{{this.BookID}}-img">
+                    <img src="{{this.bookimg}}" alt="{{this.BookID}}-img">
                     <h3>{{this.BookName}}</h3>
                     <p>{{this.Author}}</p>
                     <h6><span class="price">{{this.Price}}đ</span> / <a
@@ -89,7 +89,7 @@
             {{#each danhsach2.rows}}
             <div class="col-lg-3 col-md-6">
                 <div class="item">
-                    <a href="/shop/product/id={{this.BookID}}?page=1"><img src="/images/{{this.bookimg}}"
+                    <a href="/shop/product/id={{this.BookID}}?page=1"><img src="{{this.bookimg}}"
                             alt="{{this.BookID}}-img"></a>
                     <a href="/shop/product/id={{this.BookID}}?page=1">
                         <h3 class="favorite-book-align">{{this.BookName}}</h3>

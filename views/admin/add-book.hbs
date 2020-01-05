@@ -1,0 +1,78 @@
+{{>nav}}
+<form class="form-container" method="POST" enctype="multipart/form-data">
+    <br>
+    <h2 class="favorite-book-align">THÊM SÁCH VÀO CỬA HÀNG</h2><br>
+    <div class="container">
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="name" class="label-checkout">Tên sách:</label>
+                <input type="text" id="name" name="name" class="input-checkout-form" value="Điền tên sách" >
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="img" class="label-checkout">Hình sách:</label>
+                <input type="file" id="img" name="img" class="input-checkout-form" value="Chọn hình sách">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="author" class="label-checkout">Tác giả:</label>
+                <input type="text" id="author" name="author" class="input-checkout-form" value="Điền tên tác giả" >
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="price" class="label-checkout">Già tiền:</label>
+                <input type="number" min="0" id="price" name="price" class="input-checkout-form">
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="description" class="label-checkout">Giới thiệu sách:</label>
+                <input type="text" id="description" name="description" class="input-checkout-form" value="Điền giới thiệu" >
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="publisher" class="label-checkout">Nhà xuất bản:</label>
+                <select name="publisher" id="publisher" class="input-checkout-form">
+                    <option value="Nhà Xuất Bản Hội Nhà Văn">Hội Nhà Văn</option>
+                    <option value="Nhà Xuất Bản Lao Động">Lao Động</option>
+                    <option value="Nhà Xuất Bản Tổng hợp TP.HCM">Tổng hợp TP. HCM</option>
+                    <option value="Nhà Xuất Bản Thế Giới">Thế Giới</option>
+                    <option value="Nhà Xuất Bản Trẻ">Trẻ</option>
+                    <option value="Nhà Xuất Bản Tri Thức">Tri Thức</option>
+                    <option value="Nhã Nam">Nhã Nam</option>
+                </select>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="type" class="label-checkout">Thể loại:</label>
+                <select name="type" id="type" class="input-checkout-form">
+                    <option value="Tiểu thuyết">Tiểu thuyết</option>
+                    <option value="Tự truyện">Tự truyện</option>
+                    <option value="Văn học">Văn học</option>
+                </select>
+            </div>
+        </div>
+        <div class="row row-margin">
+            <div class="checkout-element">
+                <label for="lang" id="lang" class="label-checkout">Ngôn ngữ:</label>
+                <select name="lang" class="input-checkout-form">
+                    <option value="Vietnamese">Tiếng Việt</option>
+                    <option value="Foreign">Ngoại ngữ</option>
+                </select>
+            </div>
+        </div>
+    </div>
+     <p class="announce favorite-book-align">{{announce}}</p>
+    <br>
+     <div>
+        <input type="submit" value="Thêm"
+            class="center-submit submit-decoration" id="checkout-submit">
+    </div>
+    <br>
+</form>
+<br>

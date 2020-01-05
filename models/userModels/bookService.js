@@ -11,8 +11,10 @@ module.exports.getByID = async (id,page)=>{
       const numberOfPages = parseInt(numberOfCmts/numberOfCmtsPerPage)+(numberOfCmts%numberOfCmtsPerPage === 0 ? 0 : 1);
 
       const result2 = await client.query('SELECT * FROM "Comment"  WHERE "ID"=' + '\'' + id +'\'' +'LIMIT ' +numberOfCmtsPerPage.toString() + ' OFFSET ' + ((page-1)*numberOfCmtsPerPage).toString());
+      const result3 = await client.query('SELECT * FROM "RecommendBooks"');
+
       await client.release();
-      return [result,result2,numberOfPages];
+      return [result,result2,numberOfPages,result3];
     } 
     catch(err)
     {

@@ -1,0 +1,21 @@
+{{>nav}}
+<div class="history-order">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Mã sản phẩm</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng sản phẩm đã bán</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each danhsach.rows}}
+            <tr>
+                <td scope="row">{{this.product}}</td>
+                <td>{{this.productname}}</td>
+                <td>{{this.sum}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
